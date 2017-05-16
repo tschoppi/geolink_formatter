@@ -23,9 +23,11 @@ test:
 pages:
   stage: deploy
   script:
-  - sphinx-versioning build doc/source doc/build/html
+  - mkdir public_html
+  - sphinx-versioning build doc/source/ doc/build/html/
+  - cp -R doc/build/html/* public_html/
   artifacts:
     paths:
-    - doc/build/html
+    - public_html
   only:
   - master
