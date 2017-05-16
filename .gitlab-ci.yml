@@ -4,30 +4,47 @@ image: python:2.7
 # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
 cache:
   paths:
-  - ~/.cache/pip/
+    - ~/.cache/pip/
+
+stages:
+  - test
+  - doc
+  - deploy
 
 # This is a basic example for a gem or script which doesn't use
 # services such as redis or postgres
 before_script:
-- python -V
-- pip install -r requirements.txt
+  - python -V
+  - pip install -r requirements.txt
 
 test:
   stage: test
   allow_failure: false
   script:
-  - git --no-pager diff --check `git log --oneline | tail -1 | cut --fields=1 --delimiter=' '`
-  - flake8
-  - py.test -vv --cov-config .coveragerc --cov geolink_formatter geolink_formatter/tests
+    - git --no-pager diff --check `git log --oneline | tail -1 | cut --fields=1 --delimiter=' '`
+    - flake8
+    - py.test -vv --cov-config .coveragerc --cov geolink_formatter geolink_formatter/tests
+
+sphinx:
+  stage: doc
+  script:
+    - sphinx-versioning build doc/source doc/build/html
+  artifacts:
+    paths:
+      - doc/build/html
+    expire_in: 1 day
+  only:
+    - master
 
 pages:
   stage: deploy
+  dependencies:
+    - sphinx
   script:
-  - mkdir public_html
-  - sphinx-versioning build doc/source/ doc/build/html/
-  - cp -R doc/build/html/* public_html/
+    - mv doc/build/html/ public/
   artifacts:
     paths:
-    - public_html
+      - public
+    expire_in: 1 day
   only:
-  - master
+    - master
