@@ -4,4 +4,5 @@
 /.cache/
 /build/
 /dist/
+/doc/build/
 /geolink_formatter.egg-info/

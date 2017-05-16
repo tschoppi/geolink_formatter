@@ -9,13 +9,23 @@ cache:
 # This is a basic example for a gem or script which doesn't use
 # services such as redis or postgres
 before_script:
-  - python -V
-  - pip install -r requirements.txt
+- python -V
+- pip install -r requirements.txt
 
 test:
   stage: test
   allow_failure: false
   script:
-    - git --no-pager diff --check `git log --oneline | tail -1 | cut --fields=1 --delimiter=' '`
-    - flake8
-    - py.test -vv --cov-config .coveragerc --cov geolink_formatter geolink_formatter/tests
+  - git --no-pager diff --check `git log --oneline | tail -1 | cut --fields=1 --delimiter=' '`
+  - flake8
+  - py.test -vv --cov-config .coveragerc --cov geolink_formatter geolink_formatter/tests
+
+pages:
+  stage: deploy
+  script:
+  - sphinx-versioning build doc/source doc/build/html
+  artifacts:
+    paths:
+    - doc/build/html
+  only:
+  - master

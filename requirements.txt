@@ -1,4 +1,7 @@
 pytest
 pytest-cov
 flake8
+Sphinx
+sphinx_rtd_theme
+sphinxcontrib-versioning
 -e .
