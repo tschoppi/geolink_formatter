@@ -1,6 +1,7 @@
 /.idea/
 /.venv/
 /.coverage
+/.cache/
 /build/
 /dist/
 /geolink_formatter.egg-info/
