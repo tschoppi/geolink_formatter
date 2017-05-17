@@ -9,6 +9,7 @@ File
 
 .. autoclass:: File
    :members:
+   :show-inheritance:
 
 
 Document
@@ -16,3 +17,4 @@ Document
 
 .. autoclass:: Document
    :members:
+   :show-inheritance:

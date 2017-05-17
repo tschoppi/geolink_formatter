@@ -5,45 +5,33 @@ import datetime
 class Msg(object):
 
     invalid_argument = 'Invalid argument "{arg}": expected "{expected}", got "{got}"'
-    """
-    Message for invalid argument type.
-
-    :type: str
-    """
+    """str: Message for invalid argument type."""
 
 
 class Document(object):
-    def __init__(self, id, title, category, doctype, files, enactment_date, federal_level, authority,
-                 authority_url, type=None, subtype=None, cycle=None, decree_date=None):
-        """
-        Creates a new document instance.
+    def __init__(self, id, title, category, doctype, files, enactment_date=None, federal_level=None,
+                 authority=None, authority_url=None, type=None, subtype=None, cycle=None, decree_date=None):
+        """Creates a new document instance.
 
-        :param id: The document identifier.
-        :type id: int
-        :param title: The document title.
-        :type title: str
-        :param category: The document category.
-        :type category: str
-        :param doctype: The internal type of the document.
-        :type doctype: str
-        :param files: The files contained by the document.
-        :type files: list[geolink_formatter.entity.File]
-        :param enactment_date: The date of enactment.
-        :type enactment_date: datetime.date
-        :param federal_level: The federal level of the document.
-        :type federal_level: str
-        :param authority: The name of the authority responsible for the document.
-        :type authority: str
-        :param authority_url: The URL of the authority's website.
-        :type authority_url: str
-        :param type: The official type of the document.
-        :type type: str
-        :param subtype: The subtype of the document.
-        :type subtype: str
-        :param cycle: The document cycle.
-        :type cycle: str
-        :param decree_date: The date of decree.
-        :type decree_date: datetime.date
+        Args:
+            id (str): The document identifier.
+            title (str): The document title.
+            category (str): The document category.
+            doctype (str): The internal type of the document.
+            files (list[geolink_formatter.entity.File]): The files contained by the document.
+            enactment_date (datetime.date): The date of enactment.
+            federal_level (str): The federal level of the document.
+            authority (str): The name of the authority responsible for the document.
+            authority_url (str): The URL of the authority's website.
+            type (str): The official type of the document.
+            subtype (str): The subtype of the document.
+            cycle (str): The document cycle.
+            decree_date (datetime.date): The date of decree.
+
+        Raises:
+            TypeError: Raised on missing argument or invalid argument type.
+            ValueError: Raised on invalid argument value.
+
         """
 
         if not isinstance(files, list):
@@ -86,133 +74,79 @@ class Document(object):
 
     @property
     def id(self):
-        """
-        The document identifier.
-
-        :type: int
-        """
+        """str: The document identifier."""
         return self.__id__
 
     @property
     def title(self):
-        """
-        The document title.
-
-        :type: str
-        """
+        """str: The document title."""
         return self.__title__
 
     @property
     def category(self):
-        """
-        The document category.
-
-        :type: str
-        """
+        """str: The document category."""
         return self.__category__
 
     @property
     def doctype(self):
-        """
-        The internal type of the document.
-
-        :type: str
-        """
+        """str: The internal type of the document."""
         return self.__doctype__
 
     @property
     def files(self):
-        """
-        The files contained by the document.
-
-        :type: list[geolink_formatter.entity.File]
-        """
+        """list[geolink_formatter.entity.File]: The files contained by the document."""
         return self.__files__
 
     @property
     def enactment_date(self):
-        """
-        The date of enactment.
-
-        :type: datetime.date
-        """
+        """datetime.date: The date of enactment."""
         return self.__enactment_date__
 
     @property
     def federal_level(self):
-        """
-        The federal level of the document.
-
-        :type: str
-        """
+        """str: The federal level of the document."""
         return self.__federal_level__
 
     @property
     def authority(self):
-        """
-        The name of the authority responsible for the document.
-
-        :type: str
-        """
+        """str: The name of the authority responsible for the document."""
         return self.__authority__
 
     @property
     def authority_url(self):
-        """
-        The URL of the authority's website.
-
-        :type: str
-        """
+        """str: The URL of the authority's website."""
         return self.__authority_url__
 
     @property
     def type(self):
-        """
-        The official type of the document.
-
-        :type: str
-        """
+        """str: The official type of the document."""
         return self.__type__
 
     @property
     def subtype(self):
-        """
-        The subtype of the document.
-
-        :type: str
-        """
+        """str: The subtype of the document."""
         return self.__subtype__
 
     @property
     def cycle(self):
-        """
-        The document cycle.
-
-        :type: str
-        """
+        """str: The document cycle."""
         return self.__cycle__
 
     @property
     def decree_date(self):
-        """
-        The date of decree.
-
-        :type: datetime.date
-        """
+        """str: The date of decree."""
         return self.__decree_date__
 
 
 class File(object):
     def __init__(self, title, href, category):
-        """
-        Creates a new file instance.
+        """Creates a new file instance.
 
-        :param title: The file's title.
-        :type title: str
-        :param href: The URL to access the file.
-        :type href: str
-        :param category: The file's category.
-        :type category: str
+        Args:
+            title (str): The file's title.
+            href (str): The URL to access the file.
+            category (str): The file's category.
+
         """
 
         self.__title__ = title
@@ -221,27 +155,15 @@ class File(object):
 
     @property
     def title(self):
-        """
-        The file's title.
-
-        :type: str
-        """
+        """str: The file's title."""
         return self.__title__
 
     @property
     def href(self):
-        """
-        The URL to access the file.
-
-        :type: str
-        """
+        """str: The URL to access the file."""
         return self.__href__
 
     @property
     def category(self):
-        """
-        The file's category.
-
-        :type: str
-        """
+        """str: The file's category."""
         return self.__category__

@@ -9,3 +9,4 @@ GeoLinkFormatter
 
 .. autoclass:: GeoLinkFormatter
    :members:
+   :show-inheritance:

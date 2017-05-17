@@ -19,11 +19,11 @@ def test_file_missing_argument():
 
 def test_document():
     date = datetime.date.today()
-    d = Document(1, 'Test', 'test', 'testdoc', [File('test.pdf', 'http://my.link.to/file', 'test')], date,
+    d = Document('1', 'Test', 'test', 'testdoc', [File('test.pdf', 'http://my.link.to/file', 'test')], date,
                  'testlevel', 'Authority', 'http://my.link.to/authority', 'testtype', 'testsubtype',
                  'testcycle', date)
     assert isinstance(d, Document)
-    assert d.id == 1
+    assert d.id == '1'
     assert d.title == 'Test'
     assert d.category == 'test'
     assert d.doctype == 'testdoc'
@@ -46,7 +46,7 @@ def test_document_missing_argument():
 def test_document_invalid_files():
     date = datetime.date.today()
     with pytest.raises(TypeError):
-        Document(1, 'Test', 'test', 'testdoc', 'invalid', date, 'testlevel', 'Authority',
+        Document('1', 'Test', 'test', 'testdoc', 'invalid', date, 'testlevel', 'Authority',
                  'http://my.link.to/authority', 'testtype', 'testsubtype', 'testcycle', date)
 
 
@@ -60,7 +60,7 @@ def test_document_empty_files():
 def test_document_invalid_enactment_date():
     date = datetime.date.today()
     with pytest.raises(TypeError):
-        Document(1, 'Test', 'test', 'testdoc', [File('test.pdf', 'http://my.link.to/file', 'test')],
+        Document('1', 'Test', 'test', 'testdoc', [File('test.pdf', 'http://my.link.to/file', 'test')],
                  'invalid', 'testlevel', 'Authority', 'http://my.link.to/authority', 'testtype',
                  'testsubtype', 'testcycle', date)
 
@@ -68,6 +68,6 @@ def test_document_invalid_enactment_date():
 def test_document_invalid_decree_date():
     date = datetime.date.today()
     with pytest.raises(TypeError):
-        Document(1, 'Test', 'test', 'testdoc', [File('test.pdf', 'http://my.link.to/file', 'test')], date,
+        Document('1', 'Test', 'test', 'testdoc', [File('test.pdf', 'http://my.link.to/file', 'test')], date,
                  'testlevel', 'Authority', 'http://my.link.to/authority', 'testtype', 'testsubtype',
                  'testcycle', 'invalid')

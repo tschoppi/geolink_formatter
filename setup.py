@@ -7,7 +7,9 @@ here = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(here, 'description.rst')) as f:
     description = f.read()
 
-requires = []
+requires = [
+    'lxml>=3.7.0'
+]
 
 setup(name='geolink_formatter',
       version='0.0.1',
