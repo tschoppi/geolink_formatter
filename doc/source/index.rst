@@ -12,6 +12,7 @@ Python geoLink Formatter
 
    geolink_formatter
    geolink_formatter_entity
+   geolink_formatter_format
    geolink_formatter_parser
 
 .. include:: description.rst

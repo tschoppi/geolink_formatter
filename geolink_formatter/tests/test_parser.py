@@ -88,3 +88,29 @@ def test_xml_fromstring():
     assert documents[0].files[1].title == 'example2.pdf'
     assert documents[0].files[1].href == '/api/attachments/2'
     assert documents[0].files[1].category == 'additional'
+
+
+def test_xml_duplicate_document():
+    xml = """<?xml version="1.0" encoding="utf-8"?>
+    <geolinks>
+        <document authority='Example Authority' authority_url='http://www.example.com'
+                  category='main' cycle='Example Cycle' doctype='decree' enactment_date='1999-10-18'
+                  federal_level='Gemeinde' id='1' subtype='Example Subtype' title='Example'
+                  type='Example Type' decree_date='1999-11-01'>
+            <file category='main' href='/api/attachments/1' title='example1.pdf'></file>
+            <file category='additional' href='/api/attachments/2' title='example2.pdf'></file>
+            <file category='additional' href='/api/attachments/3' title='example3.pdf'></file>
+        </document>
+        <document authority='Example Authority' authority_url='http://www.example.com'
+                  category='main' cycle='Example Cycle' doctype='decree' enactment_date='1999-10-18'
+                  federal_level='Gemeinde' id='1' subtype='Example Subtype' title='Example'
+                  type='Example Type' decree_date='1999-11-01'>
+            <file category='main' href='/api/attachments/1' title='example1.pdf'></file>
+            <file category='additional' href='/api/attachments/2' title='example2.pdf'></file>
+            <file category='additional' href='/api/attachments/3' title='example3.pdf'></file>
+        </document>
+    </geolinks>
+    """
+    parser = XML()
+    documents = parser.fromstring(xml)
+    assert len(documents) == 1
