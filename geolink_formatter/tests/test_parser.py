@@ -6,7 +6,9 @@ from geolink_formatter.parser import XML
 
 
 def test_xml_init():
-    assert isinstance(XML(), XML)
+    parser = XML(host_url='http://oereblex.test.com')
+    assert isinstance(parser, XML)
+    assert parser.host_url == 'http://oereblex.test.com'
 
 
 def test_xml_parse():
@@ -47,7 +49,8 @@ def test_xml_fromstring_invalid():
         parser.fromstring(xml)
 
 
-def test_xml_fromstring():
+@pytest.mark.parametrize('host_url', [None, 'http://oereblex.test.com'])
+def test_xml_fromstring(host_url):
     xml = """<?xml version="1.0" encoding="utf-8"?>
     <geolinks>
         <document authority='Example Authority' authority_url='http://www.example.com'
@@ -65,7 +68,7 @@ def test_xml_fromstring():
         </document>
     </geolinks>
     """
-    parser = XML()
+    parser = XML(host_url=host_url)
     documents = parser.fromstring(xml)
     assert len(documents) == 2
     assert documents[0].authority == 'Example Authority'
@@ -86,7 +89,10 @@ def test_xml_fromstring():
     assert documents[0].decree_date.day == 1
     assert len(documents[0].files) == 3
     assert documents[0].files[1].title == 'example2.pdf'
-    assert documents[0].files[1].href == '/api/attachments/2'
+    if host_url:
+        assert documents[0].files[1].href == 'http://oereblex.test.com/api/attachments/2'
+    else:
+        assert documents[0].files[1].href == '/api/attachments/2'
     assert documents[0].files[1].category == 'additional'
 
 

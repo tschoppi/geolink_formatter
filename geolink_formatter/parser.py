@@ -6,15 +6,23 @@ from geolink_formatter.entity import Document, File
 
 
 class XML(XMLParser):
-    def __init__(self, dtd_validation=False):
+    def __init__(self, host_url=None, dtd_validation=False):
         """Create a new XML parser instance containing the geoLink XSD for validation.
 
         Args:
+            host_url (str): URL of the ÖREBlex host to resolve relative URLs. The complete URL until but
+                without the */api* part has to be set, starting with *http://* or *https://*.
             dtd_validation (bool): Enable/disable validation of document type definition (DTD).
                 Optional, defaults to False.
 
         """
         super(XML, self).__init__(dtd_validation=dtd_validation, schema=self.__schema__)
+        self.__host_url__ = host_url
+
+    @property
+    def host_url(self):
+        """str: The ÖREBlex host URL to resolve relative URLs."""
+        return self.__host_url__
 
     def __parse_xml__(self, xml):
         """Parses the specified XML string and validates it against the geoLink XSD.
@@ -53,9 +61,12 @@ class XML(XMLParser):
             if doc_id and doc_id not in [doc.id for doc in documents]:
                 files = list()
                 for file_el in document_el.iter('file'):
+                    href = file_el.attrib.get('href')
+                    if self.host_url and not href.startswith('http://') and not href.startswith('https://'):
+                        href = '{host}{href}'.format(host=self.host_url, href=href)
                     files.append(File(
                         file_el.attrib.get('title'),
-                        file_el.attrib.get('href'),
+                        href,
                         file_el.attrib.get('category')
                     ))
                 enactment_date = document_el.attrib.get('enactment_date')
