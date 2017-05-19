@@ -30,8 +30,11 @@ class HTML(object):
             str: The document formatted as HTML list item.
 
         """
-        return u'<li class="geolink-formatter-document">{title}{files}</li>'.format(
+        return u'<li class="geolink-formatter-document">{type}{title} ({enactment_date}){files}</li>'.format(
+            type=u'{0}: '.format(document.subtype or document.type)
+            if document.type or document.subtype else u'',
             title=document.title,
+            enactment_date=document.enactment_date.strftime('%d.%m.%Y'),
             files=self.__format_files__(document.files)
         )
 
