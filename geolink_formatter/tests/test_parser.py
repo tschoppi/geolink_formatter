@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
 from lxml.etree import XMLSyntaxError, _Element
+from requests import RequestException
 
 from geolink_formatter.parser import XML
 
@@ -40,17 +41,17 @@ def test_xml_parse():
     assert len(document.findall('file')) == 3
 
 
-def test_xml_fromstring_invalid():
+def test_xml_from_string_invalid():
     xml = """<?xml version="1.0" encoding="utf-8"?>
     <invalidTag></invalidTag>
     """
     with pytest.raises(XMLSyntaxError):
         parser = XML()
-        parser.fromstring(xml)
+        parser.from_string(xml)
 
 
 @pytest.mark.parametrize('host_url', [None, 'http://oereblex.test.com'])
-def test_xml_fromstring(host_url):
+def test_xml_from_string(host_url):
     xml = """<?xml version="1.0" encoding="utf-8"?>
     <geolinks>
         <document authority='Example Authority' authority_url='http://www.example.com'
@@ -69,7 +70,7 @@ def test_xml_fromstring(host_url):
     </geolinks>
     """
     parser = XML(host_url=host_url)
-    documents = parser.fromstring(xml)
+    documents = parser.from_string(xml)
     assert len(documents) == 2
     assert documents[0].authority == 'Example Authority'
     assert documents[0].authority_url == 'http://www.example.com'
@@ -118,5 +119,16 @@ def test_xml_duplicate_document():
     </geolinks>
     """
     parser = XML()
-    documents = parser.fromstring(xml)
+    documents = parser.from_string(xml)
     assert len(documents) == 1
+
+
+def test_xml_from_url_invalid():
+    with pytest.raises(RequestException):
+        XML().from_url('http://invalid.url.bl.ch/')
+
+
+def test_xml_from_url():
+    documents = XML().from_url('https://oereblex.tg.ch/api/geolinks/1500.xml')
+    assert len(documents) == 4
+    assert len(documents[0].files) == 5

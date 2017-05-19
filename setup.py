@@ -8,7 +8,8 @@ with open(os.path.join(here, 'description.rst')) as f:
     description = f.read()
 
 requires = [
-    'lxml>=3.7.0'
+    'lxml>=3.7.0',
+    'requests'
 ]
 
 setup(name='geolink_formatter',

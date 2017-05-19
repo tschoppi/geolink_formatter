@@ -16,8 +16,8 @@ class HTML(object):
             str: An HTML formatted string containing the documents as HTML list.
 
         """
-        return '<ul class="geolink-formatter">{documents}</ul>'.format(
-            documents=''.join([self.__format_document__(document) for document in documents])
+        return u'<ul class="geolink-formatter">{documents}</ul>'.format(
+            documents=u''.join([self.__format_document__(document) for document in documents])
         )
 
     def __format_document__(self, document):
@@ -30,7 +30,7 @@ class HTML(object):
             str: The document formatted as HTML list item.
 
         """
-        return '<li class="geolink-formatter-document">{title}{files}</li>'.format(
+        return u'<li class="geolink-formatter-document">{title}{files}</li>'.format(
             title=document.title,
             files=self.__format_files__(document.files)
         )
@@ -45,8 +45,8 @@ class HTML(object):
             str: The files formatted as HTML list.
 
         """
-        return '<ul class="geolink-formatter">{files}</ul>'.format(
-            files=''.join([self.__format_file__(file) for file in files])
+        return u'<ul class="geolink-formatter">{files}</ul>'.format(
+            files=u''.join([self.__format_file__(file) for file in files])
         )
 
     def __format_file__(self, file):
@@ -59,7 +59,7 @@ class HTML(object):
             str: The file formatted as HTML list item.
 
         """
-        return '<li class="geolink-formatter-file"><a href="{href}" target="_blank">{title}</a></li>'.format(
+        return u'<li class="geolink-formatter-file"><a href="{href}" target="_blank">{title}</a></li>'.format(
             title=file.title,
             href=file.href
         )

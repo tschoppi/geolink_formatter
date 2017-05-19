@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import datetime
+
+import requests
 from lxml.etree import XMLParser, XMLSchema, XML, fromstring
 
 from geolink_formatter.entity import Document, File
@@ -39,7 +41,7 @@ class XML(XMLParser):
         """
         return fromstring(xml, self)
 
-    def fromstring(self, xml):
+    def from_string(self, xml):
         """Parses XML into internal structure.
 
         The specified XML string is gets validated against the geoLink XSD on parsing.
@@ -62,8 +64,8 @@ class XML(XMLParser):
                 files = list()
                 for file_el in document_el.iter('file'):
                     href = file_el.attrib.get('href')
-                    if self.host_url and not href.startswith('http://') and not href.startswith('https://'):
-                        href = '{host}{href}'.format(host=self.host_url, href=href)
+                    if self.host_url and not href.startswith(u'http://') and not href.startswith(u'https://'):
+                        href = u'{host}{href}'.format(host=self.host_url, href=href)
                     files.append(File(
                         file_el.attrib.get('title'),
                         href,
@@ -93,10 +95,33 @@ class XML(XMLParser):
 
         return documents
 
+    def from_url(self, url, params=None, **kwargs):
+        """Loads the geoLink of the specified URL and parses it into the internal structure.
+
+        Args:
+            url (str): The URL of the geoLink to be parsed.
+            params (dict): Dictionary or bytes to be sent in the query string for the
+                :class:`requests.models.Request`.
+            **kwargs: Optional arguments that ``requests.api.request`` takes.
+
+        Returns:
+            list[geolink_formatter.entity.Document]: A list containing the parsed document elements.
+
+        Raises:
+            lxml.etree.XMLSyntaxError: Raised on failed validation.
+            requests.HTTPError: Raised on failed HTTP request.
+
+        """
+        response = requests.get(url, params=params, **kwargs)
+        if response.status_code == 200:
+            return self.from_string(response.content)
+        else:
+            response.raise_for_status()
+
     __date_format__ = '%Y-%m-%d'
     """str: Format of date values in XML."""
 
-    __schema__ = XMLSchema(XML("""
+    __schema__ = XMLSchema(XML(u"""
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:element name="geolinks">
         <xs:complexType>
