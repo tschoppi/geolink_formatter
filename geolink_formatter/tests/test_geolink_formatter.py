@@ -1,6 +1,71 @@
 # -*- coding: utf-8 -*-
+import pytest
+
 from geolink_formatter import GeoLinkFormatter
 
 
 def test_init():
-    assert isinstance(GeoLinkFormatter(), GeoLinkFormatter)
+    formatter = GeoLinkFormatter(host_url='http://example.com', dtd_validation=True)
+    assert isinstance(formatter, GeoLinkFormatter)
+    assert formatter.__host_url__ == 'http://example.com'
+    assert formatter.__dtd_validation__
+
+
+def test_html_string():
+    formatter = GeoLinkFormatter()
+    xml = """<?xml version="1.0" encoding="utf-8"?>
+        <geolinks>
+            <document authority='Example Authority' authority_url='http://www.example.com'
+                      category='main' cycle='Example Cycle' doctype='decree' enactment_date='1999-10-18'
+                      federal_level='Gemeinde' id='1' subtype='Example Subtype' title='Example Document'
+                      type='Example Type'>
+                <file category='main' href='/api/attachments/1' title='example1.pdf'></file>
+            </document>
+        </geolinks>
+        """
+    html = formatter.html(xml)
+    assert html == u'<ul class="geolink-formatter">' \
+                   u'<li class="geolink-formatter-document">Example Subtype: Example Document (18.10.1999)' \
+                   u'<ul class="geolink-formatter">' \
+                   u'<li class="geolink-formatter-file">' \
+                   u'<a href="/api/attachments/1" target="_blank">example1.pdf</a>' \
+                   u'</li>' \
+                   u'</ul>' \
+                   u'</li>' \
+                   u'</ul>'
+
+
+def test_html_url():
+    formatter = GeoLinkFormatter()
+    html = formatter.html('https://oereblex.tg.ch/api/geolinks/1500.xml')
+    assert html == u'<ul class="geolink-formatter"><li class="geolink-formatter-document">' \
+                   u'Gestaltungsplan: Tiefkühllager (27.03.2001)<ul class="geolink-formatter">' \
+                   u'<li class="geolink-formatter-file">' \
+                   u'<a href="/api/attachments/4735" target="_blank">2918-E-1.pdf</a></li>' \
+                   u'<li class="geolink-formatter-file">' \
+                   u'<a href="/api/attachments/4736" target="_blank">2918-P-1.pdf</a></li>' \
+                   u'<li class="geolink-formatter-file">' \
+                   u'<a href="/api/attachments/4737" target="_blank">2918-P-2.pdf</a></li>' \
+                   u'<li class="geolink-formatter-file">' \
+                   u'<a href="/api/attachments/4738" target="_blank">2918-P-3.pdf</a></li>' \
+                   u'<li class="geolink-formatter-file">' \
+                   u'<a href="/api/attachments/4739" target="_blank">2918-S-1.pdf</a></li></ul></li>' \
+                   u'<li class="geolink-formatter-document">' \
+                   u'Bundesgesetz über die Raumplanung (01.01.2016)<ul class="geolink-formatter">' \
+                   u'<li class="geolink-formatter-file">' \
+                   u'<a href="http://www.lexfind.ch/dtah/136884/2" target="_blank">700.de.pdf</a></li></ul>' \
+                   u'</li><li class="geolink-formatter-document">Planungs- und Baugesetz (01.04.2017)' \
+                   u'<ul class="geolink-formatter"><li class="geolink-formatter-file">' \
+                   u'<a href="http://www.rechtsbuch.tg.ch/frontend/versions/pdf_file_with_annex/1379?' \
+                   u'locale=de" target="_blank">700.pdf</a></li></ul></li>' \
+                   u'<li class="geolink-formatter-document">Verordnung des Regierungsrates zum Planungs- ' \
+                   u'und Baugesetz und zur Interkantonalen Vereinbarung über die Harmonisierung der ' \
+                   u'Baubegriffe (05.11.2016)<ul class="geolink-formatter">' \
+                   u'<li class="geolink-formatter-file">' \
+                   u'<a href="http://www.rechtsbuch.tg.ch/frontend/versions/pdf_file_with_annex/1319?' \
+                   u'locale=de" target="_blank">700.1.pdf</a></li></ul></li></ul>'
+
+
+def test_html_invalid_source():
+    with pytest.raises(TypeError):
+        GeoLinkFormatter().html(1)
