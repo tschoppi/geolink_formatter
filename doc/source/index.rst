@@ -25,14 +25,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
-
-Status of *master*
-------------------
-
-|build status| |coverage report|
-
-.. |build status| image:: https://gitlab.com/gf-bl/python-geolink-formatter/badges/master/build.svg
-   :target: https://gitlab.com/gf-bl/python-geolink-formatter/commits/master
-.. |coverage report| image:: https://gitlab.com/gf-bl/python-geolink-formatter/badges/master/coverage.svg
-   :target: https://gitlab.com/gf-bl/python-geolink-formatter/commits/master

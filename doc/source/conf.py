@@ -171,7 +171,7 @@ autoclass_content = 'both'
 scv_greatest_tag = True
 scv_show_banner = True
 scv_sort = ('semver',)
-scv_whitelist_branches = ('master',)
+scv_whitelist_branches = ('master', )
 
 # Napoleon configuration
 napoleon_numpy_docstring = False
