@@ -169,7 +169,6 @@ autoclass_content = 'both'
 
 # SCV configuration
 scv_greatest_tag = True
-scv_show_banner = True
 scv_sort = ('semver',)
 scv_whitelist_branches = ('master', )
 

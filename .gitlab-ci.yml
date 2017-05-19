@@ -34,6 +34,7 @@ sphinx:
       - doc/build/html
     expire_in: 1 day
   only:
+    - tags
     - master
 
 pages:
@@ -47,4 +48,5 @@ pages:
       - public
     expire_in: 1 day
   only:
+    - tags
     - master
