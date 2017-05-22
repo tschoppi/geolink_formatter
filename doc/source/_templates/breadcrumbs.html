@@ -1,0 +1,33 @@
+{% extends "!breadcrumbs.html" %}
+{% block breadcrumbs %}
+<p>
+    <a href="https://pypi.python.org/pypi/geolink_formatter">
+        <img alt="build status" src="https://img.shields.io/pypi/l/geolink_formatter.svg" />
+    </a>
+    {% if current_version %}
+    <a href="https://gitlab.com/gf-bl/python-geolink-formatter/tree/{{ current_version }}">
+        <img alt="build status" src="https://gitlab.com/gf-bl/python-geolink-formatter/badges/{{ current_version }}/build.svg" />
+    </a>
+    <a href="https://gitlab.com/gf-bl/python-geolink-formatter/tree/{{ current_version }}">
+        <img alt="coverage report" src="https://gitlab.com/gf-bl/python-geolink-formatter/badges/{{ current_version }}/coverage.svg" />
+    </a>
+    {% else %}
+    <a href="https://gitlab.com/gf-bl/python-geolink-formatter/tree/master">
+        <img alt="build status" src="https://gitlab.com/gf-bl/python-geolink-formatter/badges/master/build.svg" />
+    </a>
+    <a href="https://gitlab.com/gf-bl/python-geolink-formatter/tree/master">
+        <img alt="coverage report" src="https://gitlab.com/gf-bl/python-geolink-formatter/badges/master/coverage.svg" />
+    </a>
+    {% endif %}
+    <a href="https://pypi.python.org/pypi/geolink_formatter">
+        <img alt="build status" src="https://img.shields.io/pypi/pyversions/geolink_formatter.svg" />
+    </a>
+    <a href="https://pypi.python.org/pypi/geolink_formatter">
+        <img alt="coverage report" src="https://img.shields.io/pypi/format/geolink_formatter.svg" />
+    </a>
+    <a href="https://pypi.python.org/pypi/geolink_formatter">
+        <img alt="coverage report" src="https://img.shields.io/pypi/status/geolink_formatter.svg" />
+    </a>
+</p>
+{{ super() }}
+{% endblock %}
