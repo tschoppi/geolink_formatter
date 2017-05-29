@@ -13,12 +13,12 @@ requires = [
 ]
 
 setup(name='geolink_formatter',
-      version='1.0.0-alpha.2',
+      version='1.0.0-beta.1',
       description='Python geoLink Formatter',
       license='BSD',
       long_description=description,
       classifiers=[
-          "Development Status :: 3 - Alpha",
+          "Development Status :: 4 - Beta",
           "Intended Audience :: Developers",
           "License :: OSI Approved :: BSD License",
           "Natural Language :: English",
