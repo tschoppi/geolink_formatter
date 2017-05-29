@@ -33,19 +33,18 @@ clean:
 	rm -rf .venv
 
 
-.PHONY: description
-description:
+description.rst:
 	awk 'FNR==1{print ""}1' README.md CHANGELOG | pandoc -f markdown_github -t rst -o description.rst
 
 
 .PHONY: build
-build: description
+build: description.rst
 	- .venv/bin/python setup.py clean sdist bdist_wheel
 	git checkout -- description.rst
 
 
 .PHONY: upload
-upload: description
+upload: description.rst
 	- .venv/bin/python setup.py clean sdist bdist_wheel upload
 	git checkout -- description.rst
 
