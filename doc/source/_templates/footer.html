@@ -1,0 +1,17 @@
+{% extends "!footer.html" %}
+{% block extrafooter %}
+    {{ super() }}
+
+    {%- if current_version %}
+        {%- set gitlab_target = current_version %}
+    {%- else %}
+        {%- set gitlab_target = "master" %}
+    {%- endif %}
+    <div style="float: right">
+        <a href="https://gitlab.com/gf-bl/python-geolink-formatter/tree/{{ gitlab_target }}">
+            Fork me on <img alt="Fork me on GitLab" width="23"
+                 src="{{ pathto('_static/logo-gitlab.svg', 1) }}"
+            /> GitLab
+        </a>
+    </div>
+{% endblock %}
