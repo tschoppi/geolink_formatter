@@ -25,7 +25,8 @@ def test_html_string():
         """
     html = formatter.html(xml)
     assert html == u'<ul class="geolink-formatter">' \
-                   u'<li class="geolink-formatter-document">Example Subtype: Example Document (18.10.1999)' \
+                   u'<li class="geolink-formatter-document">' \
+                   u'Example Type (Example Subtype): Example Document (18.10.1999)' \
                    u'<ul class="geolink-formatter">' \
                    u'<li class="geolink-formatter-file">' \
                    u'<a href="/api/attachments/1" target="_blank">example1.pdf</a>' \
@@ -39,7 +40,8 @@ def test_html_url():
     formatter = GeoLinkFormatter()
     html = formatter.html('https://oereblex.tg.ch/api/geolinks/1500.xml')
     assert html == u'<ul class="geolink-formatter"><li class="geolink-formatter-document">' \
-                   u'Gestaltungsplan: Tiefkühllager (27.03.2001)<ul class="geolink-formatter">' \
+                   u'Sondernutzungsplan (Gestaltungsplan): Tiefkühllager (27.03.2001)' \
+                   u'<ul class="geolink-formatter">' \
                    u'<li class="geolink-formatter-file">' \
                    u'<a href="/api/attachments/4735" target="_blank">2918-E-1.pdf</a></li>' \
                    u'<li class="geolink-formatter-file">' \
