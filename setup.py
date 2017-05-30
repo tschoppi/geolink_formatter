@@ -13,7 +13,7 @@ requires = [
 ]
 
 setup(name='geolink_formatter',
-      version='1.0.0b2',
+      version='1.0.0b3',
       description='Python geoLink Formatter',
       license='BSD',
       long_description=description,

@@ -3,7 +3,7 @@ from geolink_formatter.entity import Msg
 from geolink_formatter.format import HTML
 from geolink_formatter.parser import XML
 
-__version__ = '1.0.0b2'
+__version__ = '1.0.0b3'
 
 
 class GeoLinkFormatter(object):
