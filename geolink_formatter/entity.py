@@ -10,7 +10,8 @@ class Msg(object):
 
 class Document(object):
     def __init__(self, id, title, category, doctype, files, enactment_date=None, federal_level=None,
-                 authority=None, authority_url=None, type=None, subtype=None, cycle=None, decree_date=None):
+                 authority=None, authority_url=None, type=None, subtype=None, cycle=None, decree_date=None,
+                 instance=None):
         """Creates a new document instance.
 
         Args:
@@ -27,6 +28,7 @@ class Document(object):
             subtype (str): The subtype of the document.
             cycle (str): The document cycle.
             decree_date (datetime.date): The date of decree.
+            instance (str): The document's instance.
 
         Raises:
             TypeError: Raised on missing argument or invalid argument type.
@@ -58,84 +60,90 @@ class Document(object):
                 got=decree_date.__class__
             ))
 
-        self.__id__ = id
-        self.__title__ = title
-        self.__category__ = category
-        self.__doctype__ = doctype
-        self.__files__ = files
-        self.__enactment_date__ = enactment_date
-        self.__federal_level__ = federal_level
-        self.__authority__ = authority
-        self.__authority_url__ = authority_url
-        self.__type__ = type
-        self.__subtype__ = subtype
-        self.__cycle__ = cycle
-        self.__decree_date__ = decree_date
+        self._id = id
+        self._title = title
+        self._category = category
+        self._doctype = doctype
+        self._files = files
+        self._enactment_date = enactment_date
+        self._federal_level = federal_level
+        self._authority = authority
+        self._authority_url = authority_url
+        self._type = type
+        self._subtype = subtype
+        self._cycle = cycle
+        self._decree_date = decree_date
+        self._instance = instance
 
     @property
     def id(self):
         """str: The document identifier."""
-        return self.__id__
+        return self._id
 
     @property
     def title(self):
         """str: The document title."""
-        return self.__title__
+        return self._title
 
     @property
     def category(self):
         """str: The document category."""
-        return self.__category__
+        return self._category
 
     @property
     def doctype(self):
         """str: The internal type of the document."""
-        return self.__doctype__
+        return self._doctype
 
     @property
     def files(self):
         """list[geolink_formatter.entity.File]: The files contained by the document."""
-        return self.__files__
+        return self._files
 
     @property
     def enactment_date(self):
         """datetime.date: The date of enactment."""
-        return self.__enactment_date__
+        return self._enactment_date
 
     @property
     def federal_level(self):
         """str: The federal level of the document."""
-        return self.__federal_level__
+        return self._federal_level
 
     @property
     def authority(self):
         """str: The name of the authority responsible for the document."""
-        return self.__authority__
+        return self._authority
 
     @property
     def authority_url(self):
         """str: The URL of the authority's website."""
-        return self.__authority_url__
+        return self._authority_url
 
     @property
     def type(self):
         """str: The official type of the document."""
-        return self.__type__
+        return self._type
 
     @property
     def subtype(self):
         """str: The subtype of the document."""
-        return self.__subtype__
+        return self._subtype
 
     @property
     def cycle(self):
         """str: The document cycle."""
-        return self.__cycle__
+        return self._cycle
 
     @property
     def decree_date(self):
-        """str: The date of decree."""
-        return self.__decree_date__
+        """datetime.date: The date of decree."""
+        return self._decree_date
+
+    @property
+    def instance(self):
+        """str: The document's instance."""
+        return self._instance
 
 
 class File(object):
@@ -149,21 +157,21 @@ class File(object):
 
         """
 
-        self.__title__ = title
-        self.__href__ = href
-        self.__category__ = category
+        self._title = title
+        self._href = href
+        self._category = category
 
     @property
     def title(self):
         """str: The file's title."""
-        return self.__title__
+        return self._title
 
     @property
     def href(self):
         """str: The URL to access the file."""
-        return self.__href__
+        return self._href
 
     @property
     def category(self):
         """str: The file's category."""
-        return self.__category__
+        return self._category

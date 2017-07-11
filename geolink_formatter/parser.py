@@ -2,7 +2,7 @@
 import datetime
 
 import requests
-from lxml.etree import XMLParser, XMLSchema, XML, fromstring
+from lxml.etree import XMLParser, XMLSchema, XML as EtreeXML, fromstring
 
 from geolink_formatter.entity import Document, File
 
@@ -90,7 +90,8 @@ class XML(XMLParser):
                     type=document_el.attrib.get('type'),
                     subtype=document_el.attrib.get('subtype'),
                     cycle=document_el.attrib.get('cycle'),
-                    decree_date=decree_date
+                    decree_date=decree_date,
+                    instance=document_el.attrib.get('instance')
                 ))
 
         return documents
@@ -121,7 +122,7 @@ class XML(XMLParser):
     __date_format__ = '%Y-%m-%d'
     """str: Format of date values in XML."""
 
-    __schema__ = XMLSchema(XML(u"""
+    __schema__ = XMLSchema(EtreeXML(u"""
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:element name="geolinks">
         <xs:complexType>

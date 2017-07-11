@@ -21,7 +21,7 @@ def test_document():
     date = datetime.date.today()
     d = Document('1', 'Test', 'test', 'testdoc', [File('test.pdf', 'http://my.link.to/file', 'test')], date,
                  'testlevel', 'Authority', 'http://my.link.to/authority', 'testtype', 'testsubtype',
-                 'testcycle', date)
+                 'testcycle', date, 'INST')
     assert isinstance(d, Document)
     assert d.id == '1'
     assert d.title == 'Test'
@@ -36,6 +36,7 @@ def test_document():
     assert d.subtype == 'testsubtype'
     assert d.cycle == 'testcycle'
     assert d.decree_date == date
+    assert d.instance == 'INST'
 
 
 def test_document_missing_argument():
