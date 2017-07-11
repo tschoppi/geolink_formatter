@@ -175,6 +175,7 @@ class XML(XMLParser):
                 <xs:attribute name="authority_url" type="xs:string" />
                 <xs:attribute name="cycle" type="xs:string" />
                 <xs:attribute name="title" type="xs:string" />
+                <xs:attribute name="instance" type="xs:string" />
                 <xs:attribute name="type" type="xs:string" />
                 <xs:attribute name="subtype" type="xs:string" />
                 <xs:attribute name="decree_date" type="xs:string" />

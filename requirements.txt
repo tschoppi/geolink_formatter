@@ -1,7 +1,8 @@
 pytest
 pytest-cov
 flake8
-Sphinx==1.5.6
+requests-mock
+Sphinx<1.6
 sphinx_rtd_theme
 sphinxcontrib-versioning
 -e .

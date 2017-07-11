@@ -128,7 +128,8 @@ def test_xml_from_url_invalid():
         XML().from_url('http://invalid.url.bl.ch/')
 
 
-def test_xml_from_url():
-    documents = XML().from_url('https://oereblex.tg.ch/api/geolinks/1500.xml')
-    assert len(documents) == 4
-    assert len(documents[0].files) == 5
+def test_xml_from_url(mock_request):
+    with mock_request():
+        documents = XML().from_url('http://oereblex.test.com/api/geolinks/1500.xml')
+        assert len(documents) == 4
+        assert len(documents[0].files) == 5

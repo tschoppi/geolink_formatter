@@ -20,8 +20,7 @@ lint: .venv/requirements.timestamp
 
 .PHONY: test
 test: .venv/requirements.timestamp
-	.venv/bin/py.test -vv --cov=geolink_formatter --cov-report term-missing:skip-covered \
-		geolink_formatter/tests
+	.venv/bin/py.test -vv --cov=geolink_formatter --cov-report term-missing:skip-covered tests
 
 
 .PHONY: check
@@ -50,5 +49,5 @@ upload: description
 
 
 .PHONY: doc
-doc:
+doc: .venv/requirements.timestamp
 	.venv/bin/sphinx-build -b html doc/source/ doc/build/html/

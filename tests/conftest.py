@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 import datetime
+from contextlib import contextmanager
+
 import pytest
+import requests_mock
 
 from geolink_formatter.entity import Document, File
 
@@ -17,3 +20,16 @@ def documents():
             enactment_date=datetime.date(2017, 1, 15)
         )
     ]
+
+
+@contextmanager
+def _mock_request():
+    with requests_mock.mock() as m:
+        with open('tests/resources/geolink.xml') as f:
+            m.get('http://oereblex.test.com/api/geolinks/1500.xml', content=f.read())
+        yield m
+
+
+@pytest.fixture()
+def mock_request():
+    return _mock_request

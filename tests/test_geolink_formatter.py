@@ -36,36 +36,58 @@ def test_html_string():
                    u'</ul>'
 
 
-def test_html_url():
+def test_html_url(mock_request):
     formatter = GeoLinkFormatter()
-    html = formatter.html('https://oereblex.tg.ch/api/geolinks/1500.xml')
+    with mock_request():
+        html = formatter.html('http://oereblex.test.com/api/geolinks/1500.xml')
     assert html == u'<ul class="geolink-formatter"><li class="geolink-formatter-document">' \
                    u'Sondernutzungsplan (Gestaltungsplan): Tiefkühllager (27.03.2001)' \
                    u'<ul class="geolink-formatter">' \
                    u'<li class="geolink-formatter-file">' \
-                   u'<a href="/api/attachments/4735" target="_blank">2918-E-1.pdf</a></li>' \
+                   u'<a href="/api/attachments/4735" target="_blank">2918-E-1.pdf</a>' \
+                   u'</li>' \
                    u'<li class="geolink-formatter-file">' \
-                   u'<a href="/api/attachments/4736" target="_blank">2918-P-1.pdf</a></li>' \
+                   u'<a href="/api/attachments/4736" target="_blank">2918-P-1.pdf</a>' \
+                   u'</li>' \
                    u'<li class="geolink-formatter-file">' \
-                   u'<a href="/api/attachments/4737" target="_blank">2918-P-2.pdf</a></li>' \
+                   u'<a href="/api/attachments/4737" target="_blank">2918-P-2.pdf</a>' \
+                   u'</li>' \
                    u'<li class="geolink-formatter-file">' \
-                   u'<a href="/api/attachments/4738" target="_blank">2918-P-3.pdf</a></li>' \
+                   u'<a href="/api/attachments/4738" target="_blank">2918-P-3.pdf</a>' \
+                   u'</li>' \
                    u'<li class="geolink-formatter-file">' \
-                   u'<a href="/api/attachments/4739" target="_blank">2918-S-1.pdf</a></li></ul></li>' \
+                   u'<a href="/api/attachments/4739" target="_blank">2918-S-1.pdf</a>' \
+                   u'</li>' \
+                   u'</ul>' \
+                   u'</li>' \
                    u'<li class="geolink-formatter-document">' \
-                   u'Bundesgesetz über die Raumplanung (01.01.2016)<ul class="geolink-formatter">' \
+                   u'Planungs- und Baugesetz (01.04.2017)' \
+                   u'<ul class="geolink-formatter">' \
                    u'<li class="geolink-formatter-file">' \
-                   u'<a href="http://www.lexfind.ch/dtah/136884/2" target="_blank">700.de.pdf</a></li></ul>' \
-                   u'</li><li class="geolink-formatter-document">Planungs- und Baugesetz (01.04.2017)' \
-                   u'<ul class="geolink-formatter"><li class="geolink-formatter-file">' \
                    u'<a href="http://www.rechtsbuch.tg.ch/frontend/versions/pdf_file_with_annex/1379?' \
-                   u'locale=de" target="_blank">700.pdf</a></li></ul></li>' \
-                   u'<li class="geolink-formatter-document">Verordnung des Regierungsrates zum Planungs- ' \
-                   u'und Baugesetz und zur Interkantonalen Vereinbarung über die Harmonisierung der ' \
-                   u'Baubegriffe (05.11.2016)<ul class="geolink-formatter">' \
+                   u'locale=de" target="_blank">700.pdf</a>' \
+                   u'</li>' \
+                   u'</ul>' \
+                   u'</li>' \
+                   u'<li class="geolink-formatter-document">' \
+                   u'Bundesgesetz über die Raumplanung (01.01.2016)' \
+                   u'<ul class="geolink-formatter">' \
+                   u'<li class="geolink-formatter-file">' \
+                   u'<a href="http://www.lexfind.ch/dtah/136884/2" target="_blank">700.de.pdf</a>' \
+                   u'</li>' \
+                   u'</ul>' \
+                   u'</li>' \
+                   u'<li class="geolink-formatter-document">' \
+                   u'Verordnung des Regierungsrates zum Planungs- und Baugesetz und zur Interkantonalen ' \
+                   u'Vereinbarung über die Harmonisierung der Baubegriffe (05.11.2016)' \
+                   u'<ul class="geolink-formatter">' \
                    u'<li class="geolink-formatter-file">' \
                    u'<a href="http://www.rechtsbuch.tg.ch/frontend/versions/pdf_file_with_annex/1319?' \
-                   u'locale=de" target="_blank">700.1.pdf</a></li></ul></li></ul>'
+                   u'locale=de" target="_blank">700.1.pdf</a>' \
+                   u'</li>' \
+                   u'</ul>' \
+                   u'</li>' \
+                   u'</ul>'
 
 
 def test_html_invalid_source():

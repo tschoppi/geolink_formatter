@@ -4,8 +4,10 @@ import os
 from setuptools import setup, find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(here, 'description.rst')) as f:
-    description = f.read()
+with open(os.path.join(here, 'README.rst')) as f:
+    readme = f.read()
+with open(os.path.join(here, 'CHANGELOG')) as f:
+    changelog = f.read()
 
 requires = [
     'lxml>=3.7.0',
@@ -16,7 +18,7 @@ setup(name='geolink_formatter',
       version='1.0.0b3',
       description='Python geoLink Formatter',
       license='BSD',
-      long_description=description,
+      long_description='{readme}\n\n{changelog}'.format(readme=readme, changelog=changelog),
       classifiers=[
           "Development Status :: 4 - Beta",
           "Intended Audience :: Developers",

@@ -23,7 +23,7 @@ test:
   script:
     - git --no-pager diff --check `git log --oneline | tail -1 | cut --fields=1 --delimiter=' '`
     - flake8
-    - py.test -vv --cov-config .coveragerc --cov geolink_formatter geolink_formatter/tests
+    - py.test -vv --cov-config .coveragerc --cov geolink_formatter tests
 
 sphinx:
   stage: doc
