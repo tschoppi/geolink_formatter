@@ -23,7 +23,7 @@ def test_html_string():
             </document>
         </geolinks>
         """
-    html = formatter.html(xml)
+    html = formatter.html(xml.encode('utf-16be'))
     assert html == u'<ul class="geolink-formatter">' \
                    u'<li class="geolink-formatter-document">' \
                    u'Example Type (Example Subtype): Example Document (18.10.1999)' \

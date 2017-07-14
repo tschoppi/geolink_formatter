@@ -12,7 +12,7 @@ class XML(XMLParser):
         """Create a new XML parser instance containing the geoLink XSD for validation.
 
         Args:
-            host_url (str): URL of the ÖREBlex host to resolve relative URLs. The complete URL until but
+            host_url (str): URL of the OEREBlex host to resolve relative URLs. The complete URL until but
                 without the */api* part has to be set, starting with *http://* or *https://*.
             dtd_validation (bool): Enable/disable validation of document type definition (DTD).
                 Optional, defaults to False.
@@ -23,14 +23,14 @@ class XML(XMLParser):
 
     @property
     def host_url(self):
-        """str: The ÖREBlex host URL to resolve relative URLs."""
+        """str: The OEREBlex host URL to resolve relative URLs."""
         return self.__host_url__
 
     def __parse_xml__(self, xml):
         """Parses the specified XML string and validates it against the geoLink XSD.
 
         Args:
-            xml (str): The XML to be parsed.
+            xml (str or bytes): The XML to be parsed.
 
         Returns:
             lxml.etree._Element: The root element of the parsed geoLink XML.
@@ -39,7 +39,10 @@ class XML(XMLParser):
             lxml.etree.XMLSyntaxError: Raised on failed validation.
 
         """
-        return fromstring(xml, self)
+        if isinstance(xml, bytes):
+            return fromstring(xml, self)
+        else:
+            return fromstring(xml.encode('utf-16be'), self)
 
     def from_string(self, xml):
         """Parses XML into internal structure.
@@ -47,7 +50,7 @@ class XML(XMLParser):
         The specified XML string is gets validated against the geoLink XSD on parsing.
 
         Args:
-            xml (str): The XML to be parsed.
+            xml (str or bytes): The XML to be parsed.
 
         Returns:
             list[geolink_formatter.entity.Document]: A list containing the parsed document elements.
@@ -122,7 +125,7 @@ class XML(XMLParser):
     __date_format__ = '%Y-%m-%d'
     """str: Format of date values in XML."""
 
-    __schema__ = XMLSchema(EtreeXML(u"""
+    __schema__ = XMLSchema(EtreeXML("""
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:element name="geolinks">
         <xs:complexType>

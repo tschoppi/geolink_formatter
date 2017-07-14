@@ -12,8 +12,9 @@ def test_xml_init():
     assert parser.host_url == 'http://oereblex.test.com'
 
 
-def test_xml_parse():
-    xml = """<?xml version="1.0" encoding="utf-8"?>
+@pytest.mark.parametrize('as_bytes', [False, True])
+def test_xml_parse(as_bytes):
+    xml = u"""<?xml version="1.0" encoding="utf-8"?>
     <geolinks>
         <document authority='Example Authority' authority_url='http://www.example.com'
                   category='main' cycle='Example Cycle' doctype='decree' enactment_date='1999-10-18'
@@ -30,6 +31,8 @@ def test_xml_parse():
         </document>
     </geolinks>
     """
+    if as_bytes:
+        xml = xml.encode('utf-16be')
     parser = XML()
     root = parser.__parse_xml__(xml)
     assert isinstance(root, _Element)

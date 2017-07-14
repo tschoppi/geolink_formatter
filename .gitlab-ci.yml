@@ -1,52 +1,84 @@
-image: python:2.7
+image: python:3.6
 
-# This folder is cached between builds
-# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
-cache:
-  paths:
-    - ~/.cache/pip/
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.pip-cache"
 
 stages:
-  - test
-  - doc
-  - deploy
+- test
+- doc
+- deploy
 
-# This is a basic example for a gem or script which doesn't use
-# services such as redis or postgres
 before_script:
-  - python -V
-  - pip install -r requirements.txt
+- python -V
+- pip install -r requirements.txt
+- git --no-pager diff --check `git log --oneline | tail -1 | cut --fields=1 --delimiter=' '`
 
-test:
+test:2.7:
   stage: test
+  image: python:2.7
   allow_failure: false
   script:
-    - git --no-pager diff --check `git log --oneline | tail -1 | cut --fields=1 --delimiter=' '`
-    - flake8
-    - py.test -vv --cov-config .coveragerc --cov geolink_formatter tests
+  - flake8
+  - py.test -vv --cov-config .coveragerc --cov geolink_formatter tests
+
+test:3.4:
+  stage: test
+  image: python:3.4
+  allow_failure: false
+  script:
+  - flake8
+  - py.test -vv --cov-config .coveragerc --cov geolink_formatter tests
+
+test:3.5:
+  stage: test
+  image: python:3.5
+  allow_failure: false
+  script:
+  - flake8
+  - py.test -vv --cov-config .coveragerc --cov geolink_formatter tests
+
+test:3.6:
+  stage: test
+  image: python:3.6
+  cache:
+    key: "$CI_PIPELINE_ID"
+    paths:
+    - "$CI_PROJECT_DIR/.pip-cache"
+  allow_failure: false
+  script:
+  - flake8
+  - py.test -vv --cov-config .coveragerc --cov geolink_formatter tests
 
 sphinx:
   stage: doc
+  cache:
+    key: "$CI_PIPELINE_ID"
+    paths:
+    - "$CI_PROJECT_DIR/.pip-cache"
   script:
-    - sphinx-versioning build doc/source doc/build/html
+  - sphinx-versioning build doc/source doc/build/html
   artifacts:
     paths:
-      - doc/build/html
+    - doc/build/html
     expire_in: 1 day
   only:
-    - tags
-    - master
+  - tags
+  - master
 
 pages:
   stage: deploy
+  cache:
+    key: "$CI_PIPELINE_ID"
+    paths:
+    - "$CI_PROJECT_DIR/.pip-cache"
   dependencies:
-    - sphinx
+  - sphinx
   script:
-    - mv doc/build/html/ public/
+  - mv doc/build/html/ public/
   artifacts:
     paths:
-      - public
+    - public
     expire_in: 1 day
   only:
-    - tags
-    - master
+  - tags
+  - master
