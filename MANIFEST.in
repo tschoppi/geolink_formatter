@@ -1,1 +1,3 @@
-include description.rst
+include README.rst
+include CHANGELOG
+include setup.cfg

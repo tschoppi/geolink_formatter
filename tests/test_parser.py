@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import pytest
+import requests_mock
 from lxml.etree import XMLSyntaxError, _Element
 from requests import RequestException
 
@@ -129,6 +130,13 @@ def test_xml_duplicate_document():
 def test_xml_from_url_invalid():
     with pytest.raises(RequestException):
         XML().from_url('http://invalid.url.bl.ch/')
+
+
+def test_xml_from_url_error():
+    with requests_mock.mock() as m:
+        m.get('http://oereblex.test.com/api/geolinks/1501.xml', text='error', status_code=500)
+        with pytest.raises(RequestException):
+            XML().from_url('http://oereblex.test.com/api/geolinks/1501.xml')
 
 
 def test_xml_from_url(mock_request):

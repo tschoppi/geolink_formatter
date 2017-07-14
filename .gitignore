@@ -1,7 +1,9 @@
 /.idea/
 /.venv/
 /.coverage
+/.coverage.*
 /.cache/
+/.tox/
 /build/
 /dist/
 /doc/build/
