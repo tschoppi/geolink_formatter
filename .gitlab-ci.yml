@@ -8,16 +8,14 @@ stages:
 - doc
 - deploy
 
-before_script:
-- python -V
-- pip install -r requirements.txt
-- git --no-pager diff --check `git log --oneline | tail -1 | cut --fields=1 --delimiter=' '`
-
 test:2.7:
   stage: test
   image: python:2.7
   allow_failure: false
   script:
+  - git --no-pager diff --check `git log --oneline | tail -1 | cut --fields=1 --delimiter=' '`
+  - python -V
+  - pip install -r requirements.txt
   - flake8
   - py.test -vv --cov-config .coveragerc --cov geolink_formatter tests
 
@@ -26,6 +24,9 @@ test:3.4:
   image: python:3.4
   allow_failure: false
   script:
+  - git --no-pager diff --check `git log --oneline | tail -1 | cut --fields=1 --delimiter=' '`
+  - python -V
+  - pip install -r requirements.txt
   - flake8
   - py.test -vv --cov-config .coveragerc --cov geolink_formatter tests
 
@@ -34,6 +35,9 @@ test:3.5:
   image: python:3.5
   allow_failure: false
   script:
+  - git --no-pager diff --check `git log --oneline | tail -1 | cut --fields=1 --delimiter=' '`
+  - python -V
+  - pip install -r requirements.txt
   - flake8
   - py.test -vv --cov-config .coveragerc --cov geolink_formatter tests
 
@@ -46,6 +50,9 @@ test:3.6:
     - "$CI_PROJECT_DIR/.pip-cache"
   allow_failure: false
   script:
+  - git --no-pager diff --check `git log --oneline | tail -1 | cut --fields=1 --delimiter=' '`
+  - python -V
+  - pip install -r requirements.txt
   - flake8
   - py.test -vv --cov-config .coveragerc --cov geolink_formatter tests
 
@@ -82,3 +89,19 @@ pages:
   only:
   - tags
   - master
+
+# Analyze code quality
+codeclimate:
+  image: docker:latest
+  variables:
+    DOCKER_DRIVER: overlay
+  services:
+    - docker:dind
+  script:
+    - docker pull codeclimate/codeclimate
+    - docker run --env CODECLIMATE_CODE="$PWD/geolink_formatter" --volume "$PWD/geolink_formatter":/code --volume /var/run/docker.sock:/var/run/docker.sock --volume /tmp/cc:/tmp/cc codeclimate/codeclimate init
+    - docker run --env CODECLIMATE_CODE="$PWD/geolink_formatter" --volume "$PWD/geolink_formatter":/code --volume /var/run/docker.sock:/var/run/docker.sock --volume /tmp/cc:/tmp/cc codeclimate/codeclimate analyze -f json > codeclimate.json
+  artifacts:
+    paths: [codeclimate.json]
+  only:
+    - branches
