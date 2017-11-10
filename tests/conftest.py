@@ -22,6 +22,20 @@ def documents():
     ]
 
 
+@pytest.fixture()
+def document_without_file():
+    return [
+        Document(
+            '1',
+            'Document with file',
+            'main',
+            'decree',
+            [],
+            enactment_date=datetime.date(2017, 1, 15)
+        )
+    ]
+
+
 @contextmanager
 def _mock_request():
     with requests_mock.mock() as m:

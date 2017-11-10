@@ -51,13 +51,6 @@ def test_document_invalid_files():
                  'http://my.link.to/authority', 'testtype', 'testsubtype', 'testcycle', date)
 
 
-def test_document_empty_files():
-    date = datetime.date.today()
-    with pytest.raises(ValueError):
-        Document(1, 'Test', 'test', 'testdoc', [], date, 'testlevel', 'Authority',
-                 'http://my.link.to/authority', 'testtype', 'testsubtype', 'testcycle', date)
-
-
 def test_document_invalid_enactment_date():
     date = datetime.date.today()
     with pytest.raises(TypeError):

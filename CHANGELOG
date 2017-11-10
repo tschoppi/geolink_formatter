@@ -2,6 +2,12 @@ Changelog
 ---------
 
 
+1.1.1
+*****
+
+- Allow documents with empty file list
+
+
 1.1.0
 *****
 

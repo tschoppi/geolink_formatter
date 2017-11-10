@@ -43,9 +43,6 @@ class Document(object):
                 got=files.__class__
             ))
 
-        if len(files) < 1:
-            raise ValueError('Argument "files" has to contain at least one element')
-
         if not isinstance(enactment_date, datetime.date):
             raise TypeError(Msg.invalid_argument.format(
                 arg='enactment_date',

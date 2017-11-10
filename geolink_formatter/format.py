@@ -49,9 +49,11 @@ class HTML(object):
             str: The files formatted as HTML list.
 
         """
-        return u'<ul class="geolink-formatter">{files}</ul>'.format(
-            files=u''.join([self.__format_file__(file) for file in files])
-        )
+        if len(files) > 0:
+            return u'<ul class="geolink-formatter">{files}</ul>'.format(
+                files=u''.join([self.__format_file__(file) for file in files])
+            )
+        return u''
 
     def __format_file__(self, file):
         """Formats a :obj:`geolink_formatter.entity.File` instance as HTML list item.
