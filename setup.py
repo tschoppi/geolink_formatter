@@ -15,7 +15,7 @@ requires = [
 ]
 
 setup(name='geolink_formatter',
-      version='1.1.1',
+      version='1.1.2',
       description='Python geoLink Formatter',
       license='BSD',
       long_description='{readme}\n\n{changelog}'.format(readme=readme, changelog=changelog),

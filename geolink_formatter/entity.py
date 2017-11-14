@@ -9,9 +9,9 @@ class Msg(object):
 
 
 class Document(object):
-    def __init__(self, id, title, category, doctype, files, enactment_date=None, federal_level=None,
-                 authority=None, authority_url=None, type=None, subtype=None, cycle=None, decree_date=None,
-                 instance=None):
+    def __init__(self, id=None, title=None, category=None, doctype=None, files=None, enactment_date=None,
+                 federal_level=None, authority=None, authority_url=None, type=None, subtype=None, cycle=None,
+                 decree_date=None, instance=None):
         """Creates a new document instance.
 
         Args:
@@ -43,7 +43,7 @@ class Document(object):
                 got=files.__class__
             ))
 
-        if not isinstance(enactment_date, datetime.date):
+        if enactment_date and not isinstance(enactment_date, datetime.date):
             raise TypeError(Msg.invalid_argument.format(
                 arg='enactment_date',
                 expected=datetime.date,
@@ -144,7 +144,7 @@ class Document(object):
 
 
 class File(object):
-    def __init__(self, title, href, category):
+    def __init__(self, title=None, href=None, category=None):
         """Creates a new file instance.
 
         Args:

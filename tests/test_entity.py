@@ -12,11 +12,6 @@ def test_file():
     assert f.category == 'test'
 
 
-def test_file_missing_argument():
-    with pytest.raises(TypeError):
-        File()
-
-
 def test_document():
     date = datetime.date.today()
     d = Document('1', 'Test', 'test', 'testdoc', [File('test.pdf', 'http://my.link.to/file', 'test')], date,
