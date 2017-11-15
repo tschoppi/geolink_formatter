@@ -12,11 +12,11 @@ from geolink_formatter.entity import Document, File
 def documents():
     return [
         Document(
-            '1',
-            'Document with file',
-            'main',
-            'decree',
-            [File('Test file', 'http://www.example.com/test.pdf', 'main')],
+            id='1',
+            title='Document with file',
+            category='main',
+            doctype='decree',
+            files=[File(title='Test file', href='http://www.example.com/test.pdf', category='main')],
             enactment_date=datetime.date(2017, 1, 15)
         )
     ]
@@ -26,11 +26,11 @@ def documents():
 def document_without_file():
     return [
         Document(
-            '1',
-            'Document with file',
-            'main',
-            'decree',
-            [],
+            id='1',
+            title='Document without file',
+            category='main',
+            doctype='decree',
+            files=[],
             enactment_date=datetime.date(2017, 1, 15)
         )
     ]

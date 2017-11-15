@@ -16,7 +16,7 @@ def test_html_string():
     xml = """<?xml version="1.0" encoding="utf-8"?>
         <geolinks>
             <document authority='Example Authority' authority_url='http://www.example.com'
-                      category='main' cycle='Example Cycle' doctype='decree' enactment_date='1999-10-18'
+                      category='main' doctype='decree' enactment_date='1999-10-18'
                       federal_level='Gemeinde' id='1' subtype='Example Subtype' title='Example Document'
                       type='Example Type'>
                 <file category='main' href='/api/attachments/1' title='example1.pdf'></file>

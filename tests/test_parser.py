@@ -18,7 +18,7 @@ def test_xml_parse(as_bytes):
     xml = u"""<?xml version="1.0" encoding="utf-8"?>
     <geolinks>
         <document authority='Example Authority' authority_url='http://www.example.com'
-                  category='main' cycle='Example Cycle' doctype='decree' enactment_date='1999-10-18'
+                  category='main' doctype='decree' enactment_date='1999-10-18'
                   federal_level='Gemeinde' id='1' subtype='Example Subtype' title='Example'
                   type='Example Type'>
             <file category='main' href='/api/attachments/1' title='example1.pdf'></file>
@@ -59,7 +59,7 @@ def test_xml_from_string(host_url):
     xml = """<?xml version="1.0" encoding="utf-8"?>
     <geolinks>
         <document authority='Example Authority' authority_url='http://www.example.com'
-                  category='main' cycle='Example Cycle' doctype='decree' enactment_date='1999-10-18'
+                  category='main' doctype='decree' enactment_date='1999-10-18'
                   federal_level='Gemeinde' id='1' subtype='Example Subtype' title='Example'
                   type='Example Type' decree_date='1999-11-01'>
             <file category='main' href='/api/attachments/1' title='example1.pdf'></file>
@@ -79,7 +79,6 @@ def test_xml_from_string(host_url):
     assert documents[0].authority == 'Example Authority'
     assert documents[0].authority_url == 'http://www.example.com'
     assert documents[0].category == 'main'
-    assert documents[0].cycle == 'Example Cycle'
     assert documents[0].doctype == 'decree'
     assert documents[0].enactment_date.year == 1999
     assert documents[0].enactment_date.month == 10
@@ -105,7 +104,7 @@ def test_xml_duplicate_document():
     xml = """<?xml version="1.0" encoding="utf-8"?>
     <geolinks>
         <document authority='Example Authority' authority_url='http://www.example.com'
-                  category='main' cycle='Example Cycle' doctype='decree' enactment_date='1999-10-18'
+                  category='main' doctype='decree' enactment_date='1999-10-18'
                   federal_level='Gemeinde' id='1' subtype='Example Subtype' title='Example'
                   type='Example Type' decree_date='1999-11-01'>
             <file category='main' href='/api/attachments/1' title='example1.pdf'></file>
@@ -113,7 +112,7 @@ def test_xml_duplicate_document():
             <file category='additional' href='/api/attachments/3' title='example3.pdf'></file>
         </document>
         <document authority='Example Authority' authority_url='http://www.example.com'
-                  category='main' cycle='Example Cycle' doctype='decree' enactment_date='1999-10-18'
+                  category='main' doctype='decree' enactment_date='1999-10-18'
                   federal_level='Gemeinde' id='1' subtype='Example Subtype' title='Example'
                   type='Example Type' decree_date='1999-11-01'>
             <file category='main' href='/api/attachments/1' title='example1.pdf'></file>
@@ -140,7 +139,10 @@ def test_xml_from_url_error():
 
 
 def test_xml_from_url(mock_request):
+    fmt = '%Y-%m-%d'
     with mock_request():
         documents = XML().from_url('http://oereblex.test.com/api/geolinks/1500.xml')
         assert len(documents) == 4
         assert len(documents[0].files) == 5
+        assert documents[0].decree_date.strftime(fmt) == '2001-03-15'
+        assert documents[0].abrogation_date.strftime(fmt) == '2008-12-31'

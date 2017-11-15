@@ -2,6 +2,14 @@ Changelog
 ---------
 
 
+1.2.0
+*****
+
+Supported geoLink schema version: 20171108
+
+- Use new geoLink schema
+
+
 1.1.2
 *****
 

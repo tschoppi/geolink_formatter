@@ -70,9 +70,9 @@ class XML(XMLParser):
                     if self.host_url and not href.startswith(u'http://') and not href.startswith(u'https://'):
                         href = u'{host}{href}'.format(host=self.host_url, href=href)
                     files.append(File(
-                        file_el.attrib.get('title'),
-                        href,
-                        file_el.attrib.get('category')
+                        title=file_el.attrib.get('title'),
+                        href=href,
+                        category=file_el.attrib.get('category')
                     ))
                 enactment_date = document_el.attrib.get('enactment_date')
                 if enactment_date:
@@ -80,21 +80,26 @@ class XML(XMLParser):
                 decree_date = document_el.attrib.get('decree_date')
                 if decree_date:
                     decree_date = datetime.datetime.strptime(decree_date, self.__date_format__).date()
+                abrogation_date = document_el.attrib.get('abrogation_date')
+                if abrogation_date:
+                    abrogation_date = datetime.datetime.strptime(abrogation_date, self.__date_format__).date()
                 documents.append(Document(
-                    doc_id,
-                    document_el.attrib.get('title'),
-                    document_el.attrib.get('category'),
-                    document_el.attrib.get('doctype'),
-                    files,
-                    enactment_date=enactment_date,
+                    files=files,
+                    id=doc_id,
+                    category=document_el.attrib.get('category'),
+                    doctype=document_el.attrib.get('doctype'),
                     federal_level=document_el.attrib.get('federal_level'),
                     authority=document_el.attrib.get('authority'),
                     authority_url=document_el.attrib.get('authority_url'),
+                    title=document_el.attrib.get('title'),
+                    number=document_el.attrib.get('number'),
+                    abbreviation=document_el.attrib.get('abbreviation'),
+                    instance=document_el.attrib.get('instance'),
                     type=document_el.attrib.get('type'),
                     subtype=document_el.attrib.get('subtype'),
-                    cycle=document_el.attrib.get('cycle'),
                     decree_date=decree_date,
-                    instance=document_el.attrib.get('instance')
+                    enactment_date=enactment_date,
+                    abrogation_date=abrogation_date,
                 ))
 
         return documents
@@ -177,13 +182,15 @@ class XML(XMLParser):
                 </xs:attribute>
                 <xs:attribute name="authority" type="xs:string" />
                 <xs:attribute name="authority_url" type="xs:string" />
-                <xs:attribute name="cycle" type="xs:string" />
                 <xs:attribute name="title" type="xs:string" />
+                <xs:attribute name="number" type="xs:string" />
+                <xs:attribute name="abbreviation" type="xs:string" />
                 <xs:attribute name="instance" type="xs:string" />
                 <xs:attribute name="type" type="xs:string" />
                 <xs:attribute name="subtype" type="xs:string" />
                 <xs:attribute name="decree_date" type="xs:string" />
                 <xs:attribute name="enactment_date" type="xs:string" />
+                <xs:attribute name="abrogation_date" type="xs:string" />
               </xs:complexType>
             </xs:element>
           </xs:choice>

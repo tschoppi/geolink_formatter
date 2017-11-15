@@ -20,6 +20,6 @@ def test_format_without_file(document_without_file):
     formatter = HTML()
     html = formatter.format(document_without_file)
     assert html == '<ul class="geolink-formatter">' \
-                   '<li class="geolink-formatter-document">Document with file (15.01.2017)' \
+                   '<li class="geolink-formatter-document">Document without file (15.01.2017)' \
                    '</li>' \
                    '</ul>'
