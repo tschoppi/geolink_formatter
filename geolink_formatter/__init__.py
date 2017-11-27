@@ -5,22 +5,25 @@ from geolink_formatter.entity import Msg
 from geolink_formatter.format import HTML
 from geolink_formatter.parser import XML
 
-__version__ = '1.2.0'
+
+__version__ = '1.3.0-dev'
 
 
 class GeoLinkFormatter(object):
-    def __init__(self, host_url=None, dtd_validation=False):
+    def __init__(self, host_url=None, version='1.1.0', dtd_validation=False):
         """Creates a new GeoLinkFormatter instance.
 
         Args:
             host_url (str): URL of the OEREBlex host to resolve relative URLs. The complete URL until but
                 without the */api* part has to be set, starting with *http://* or *https://*.
+            version (str): The version of the geoLink schema to be used. Defaults to `1.1.0`.
             dtd_validation (bool): Enable/disable validation of document type definition (DTD).
                 Optional, defaults to False.
 
         """
-        self.__host_url__ = host_url
-        self.__dtd_validation__ = dtd_validation
+        self._host_url = host_url
+        self._version = version
+        self._dtd_validation = dtd_validation
 
     def html(self, source):
         """Returns the HTML representation of the geoLink XML form the specified source.
@@ -38,7 +41,7 @@ class GeoLinkFormatter(object):
             requests.HTTPError: Raised on failed HTTP request.
 
         """
-        parser = XML(host_url=self.__host_url__, dtd_validation=self.__dtd_validation__)
+        parser = XML(host_url=self._host_url, version=self._version, dtd_validation=self._dtd_validation)
         if isinstance(source, (str, bytes)):
             http = 'http://' if isinstance(source, str) else b'http://'
             https = 'https://' if isinstance(source, str) else b'https://'

@@ -7,8 +7,8 @@ from geolink_formatter import GeoLinkFormatter
 def test_init():
     formatter = GeoLinkFormatter(host_url='http://example.com', dtd_validation=True)
     assert isinstance(formatter, GeoLinkFormatter)
-    assert formatter.__host_url__ == 'http://example.com'
-    assert formatter.__dtd_validation__
+    assert formatter._host_url == 'http://example.com'
+    assert formatter._dtd_validation
 
 
 def test_html_string():

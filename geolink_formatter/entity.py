@@ -11,7 +11,7 @@ class Msg(object):
 class Document(object):
     def __init__(self, files=list(), id=None, category=None, doctype=None, federal_level=None, authority=None,
                  authority_url=None, title=None, number=None, abbreviation=None, instance=None, type=None,
-                 subtype=None, decree_date=None, enactment_date=None, abrogation_date=None):
+                 subtype=None, decree_date=None, enactment_date=None, abrogation_date=None, cycle=None):
         """Creates a new document instance.
 
         Args:
@@ -31,6 +31,7 @@ class Document(object):
             decree_date (datetime.date): The date of decree.
             enactment_date (datetime.date): The date of enactment.
             abrogation_date (datetime.date): The date of abrogation.
+            cycle (str): The document cycle.
 
         Raises:
             TypeError: Raised on missing argument or invalid argument type.
@@ -82,6 +83,7 @@ class Document(object):
         self._decree_date = decree_date
         self._enactment_date = enactment_date
         self._abrogation_date = abrogation_date
+        self._cycle = cycle
 
     @property
     def files(self):
@@ -125,12 +127,12 @@ class Document(object):
 
     @property
     def number(self):
-        """str: The document number."""
+        """str: The document number (since v1.1.0)."""
         return self._number
 
     @property
     def abbreviation(self):
-        """str: The document abbreviation."""
+        """str: The document abbreviation (since v1.1.0)."""
         return self._abbreviation
 
     @property
@@ -160,8 +162,13 @@ class Document(object):
 
     @property
     def abrogation_date(self):
-        """datetime.date: The date of abrogation."""
+        """datetime.date: The date of abrogation (since v1.1.0)."""
         return self._abrogation_date
+
+    @property
+    def cycle(self):
+        """str: The document cycle (v1.0.0 only)."""
+        return self._cycle
 
 
 class File(object):

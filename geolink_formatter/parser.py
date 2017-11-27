@@ -1,32 +1,52 @@
 # -*- coding: utf-8 -*-
 import datetime
 
+import pkg_resources
 import requests
 from lxml.etree import XMLParser, XMLSchema, XML as EtreeXML, fromstring
 
 from geolink_formatter.entity import Document, File
 
 
+class SCHEMA(object):
+    """Provides the available geoLink schema versions."""
+
+    V1_0_0 = '1.0.0'
+    """str: geoLink schema version 1.0.0"""
+
+    V1_1_0 = '1.1.0'
+    """str: geoLink schema version 1.1.0"""
+
+
 class XML(XMLParser):
-    def __init__(self, host_url=None, dtd_validation=False):
+
+    _date_format = '%Y-%m-%d'
+    """str: Format of date values in XML."""
+
+    def __init__(self, host_url=None, version='1.1.0', dtd_validation=False):
         """Create a new XML parser instance containing the geoLink XSD for validation.
 
         Args:
             host_url (str): URL of the OEREBlex host to resolve relative URLs. The complete URL until but
                 without the */api* part has to be set, starting with *http://* or *https://*.
+            version (str): The version of the geoLink schema to be used. Defaults to `1.1.0`.
             dtd_validation (bool): Enable/disable validation of document type definition (DTD).
                 Optional, defaults to False.
 
         """
-        super(XML, self).__init__(dtd_validation=dtd_validation, schema=self.__schema__)
-        self.__host_url__ = host_url
+        self._host_url = host_url
+        self._version = version
+        xsd = pkg_resources.resource_filename('geolink_formatter', 'schema/v{0}.xsd'.format(version))
+        with open(xsd) as f:
+            self._schema = XMLSchema(EtreeXML(f.read()))
+        super(XML, self).__init__(dtd_validation=dtd_validation, schema=self._schema)
 
     @property
     def host_url(self):
         """str: The OEREBlex host URL to resolve relative URLs."""
-        return self.__host_url__
+        return self._host_url
 
-    def __parse_xml__(self, xml):
+    def _parse_xml(self, xml):
         """Parses the specified XML string and validates it against the geoLink XSD.
 
         Args:
@@ -58,7 +78,7 @@ class XML(XMLParser):
         Raises:
             lxml.etree.XMLSyntaxError: Raised on failed validation.
         """
-        root = self.__parse_xml__(xml)
+        root = self._parse_xml(xml)
         documents = list()
 
         for document_el in root.iter('document'):
@@ -76,13 +96,13 @@ class XML(XMLParser):
                     ))
                 enactment_date = document_el.attrib.get('enactment_date')
                 if enactment_date:
-                    enactment_date = datetime.datetime.strptime(enactment_date, self.__date_format__).date()
+                    enactment_date = datetime.datetime.strptime(enactment_date, self._date_format).date()
                 decree_date = document_el.attrib.get('decree_date')
                 if decree_date:
-                    decree_date = datetime.datetime.strptime(decree_date, self.__date_format__).date()
+                    decree_date = datetime.datetime.strptime(decree_date, self._date_format).date()
                 abrogation_date = document_el.attrib.get('abrogation_date')
                 if abrogation_date:
-                    abrogation_date = datetime.datetime.strptime(abrogation_date, self.__date_format__).date()
+                    abrogation_date = datetime.datetime.strptime(abrogation_date, self._date_format).date()
                 documents.append(Document(
                     files=files,
                     id=doc_id,
@@ -100,6 +120,7 @@ class XML(XMLParser):
                     decree_date=decree_date,
                     enactment_date=enactment_date,
                     abrogation_date=abrogation_date,
+                    cycle=document_el.attrib.get('cycle')
                 ))
 
         return documents
@@ -126,76 +147,3 @@ class XML(XMLParser):
             return self.from_string(response.content)
         else:
             response.raise_for_status()
-
-    __date_format__ = '%Y-%m-%d'
-    """str: Format of date values in XML."""
-
-    __schema__ = XMLSchema(EtreeXML("""
-    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-      <xs:element name="geolinks">
-        <xs:complexType>
-          <xs:choice minOccurs="1" maxOccurs="unbounded">
-            <xs:element name="document">
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="file" minOccurs="0" maxOccurs="unbounded">
-                    <xs:complexType>
-                      <xs:attribute name="category">
-                          <xs:simpleType>
-                              <xs:restriction base="xs:string">
-                                  <xs:enumeration value="main" />
-                                  <xs:enumeration value="additional" />
-                              </xs:restriction>
-                          </xs:simpleType>
-                      </xs:attribute>
-                      <xs:attribute name="href" type="xs:string" />
-                      <xs:attribute name="title" type="xs:string" />
-                    </xs:complexType>
-                  </xs:element>
-                </xs:sequence>
-                <xs:attribute name="id" type="xs:string" />
-                <xs:attribute name="category" >
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:enumeration value="main" />
-                            <xs:enumeration value="related" />
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:attribute>
-                <xs:attribute name="doctype">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:enumeration value="edict" />
-                            <xs:enumeration value="decree" />
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:attribute>
-                <xs:attribute name="federal_level">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:enumeration value="Gemeinde" />
-                            <xs:enumeration value="Kanton" />
-                            <xs:enumeration value="Interkantonal" />
-                            <xs:enumeration value="Bund" />
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:attribute>
-                <xs:attribute name="authority" type="xs:string" />
-                <xs:attribute name="authority_url" type="xs:string" />
-                <xs:attribute name="title" type="xs:string" />
-                <xs:attribute name="number" type="xs:string" />
-                <xs:attribute name="abbreviation" type="xs:string" />
-                <xs:attribute name="instance" type="xs:string" />
-                <xs:attribute name="type" type="xs:string" />
-                <xs:attribute name="subtype" type="xs:string" />
-                <xs:attribute name="decree_date" type="xs:string" />
-                <xs:attribute name="enactment_date" type="xs:string" />
-                <xs:attribute name="abrogation_date" type="xs:string" />
-              </xs:complexType>
-            </xs:element>
-          </xs:choice>
-        </xs:complexType>
-      </xs:element>
-    </xs:schema>
-    """))
-    """lxml.etree.XMLSchema: geoLink XML schema for validation."""

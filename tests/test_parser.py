@@ -4,7 +4,7 @@ import requests_mock
 from lxml.etree import XMLSyntaxError, _Element
 from requests import RequestException
 
-from geolink_formatter.parser import XML
+from geolink_formatter.parser import XML, SCHEMA
 
 
 def test_xml_init():
@@ -35,7 +35,7 @@ def test_xml_parse(as_bytes):
     if as_bytes:
         xml = xml.encode('utf-16be')
     parser = XML()
-    root = parser.__parse_xml__(xml)
+    root = parser._parse_xml(xml)
     assert isinstance(root, _Element)
     assert root.tag == 'geolinks'
     assert len(root.findall('document')) == 2
@@ -146,3 +146,28 @@ def test_xml_from_url(mock_request):
         assert len(documents[0].files) == 5
         assert documents[0].decree_date.strftime(fmt) == '2001-03-15'
         assert documents[0].abrogation_date.strftime(fmt) == '2008-12-31'
+
+
+def test_wrong_schema_version(mock_request):
+    with mock_request():
+        with pytest.raises(XMLSyntaxError):
+            XML(version=SCHEMA.V1_0_0).from_url('http://oereblex.test.com/api/geolinks/1500.xml')
+
+
+def test_schema_version_1_0_0():
+    with requests_mock.mock() as m:
+        with open('tests/resources/geolink_v1.0.0.xml', 'rb') as f:
+            m.get('http://oereblex.test.com/api/geolinks/1500.xml', content=f.read())
+        documents = XML(version=SCHEMA.V1_0_0).from_url('http://oereblex.test.com/api/geolinks/1500.xml')
+    assert documents[0].cycle == 'cycle'
+
+
+def test_schema_version_1_1_0():
+    fmt = '%Y-%m-%d'
+    with requests_mock.mock() as m:
+        with open('tests/resources/geolink_v1.1.0.xml', 'rb') as f:
+            m.get('http://oereblex.test.com/api/geolinks/1500.xml', content=f.read())
+        documents = XML(version=SCHEMA.V1_1_0).from_url('http://oereblex.test.com/api/geolinks/1500.xml')
+    assert documents[0].number == '1A'
+    assert documents[0].abbreviation == 'abbr'
+    assert documents[0].abrogation_date.strftime(fmt) == '2008-12-31'

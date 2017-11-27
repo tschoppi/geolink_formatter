@@ -92,17 +92,17 @@ pages:
   - master
 
 # Analyze code quality
-codeclimate:
-  image: docker:latest
-  variables:
-    DOCKER_DRIVER: overlay
-  services:
-    - docker:dind
-  script:
-    - docker pull codeclimate/codeclimate
-    - docker run --env CODECLIMATE_CODE="$PWD/geolink_formatter" --volume "$PWD/geolink_formatter":/code --volume /var/run/docker.sock:/var/run/docker.sock --volume /tmp/cc:/tmp/cc codeclimate/codeclimate init
-    - docker run --env CODECLIMATE_CODE="$PWD/geolink_formatter" --volume "$PWD/geolink_formatter":/code --volume /var/run/docker.sock:/var/run/docker.sock --volume /tmp/cc:/tmp/cc codeclimate/codeclimate analyze -f json > codeclimate.json
-  artifacts:
-    paths: [codeclimate.json]
-  only:
-    - branches
+#codeclimate:
+#  image: docker:latest
+#  variables:
+#    DOCKER_DRIVER: overlay
+#  services:
+#    - docker:dind
+#  script:
+#    - docker pull codeclimate/codeclimate
+#    - docker run --env CODECLIMATE_CODE="$PWD/geolink_formatter" --volume "$PWD/geolink_formatter":/code --volume /var/run/docker.sock:/var/run/docker.sock --volume /tmp/cc:/tmp/cc codeclimate/codeclimate init
+#    - docker run --env CODECLIMATE_CODE="$PWD/geolink_formatter" --volume "$PWD/geolink_formatter":/code --volume /var/run/docker.sock:/var/run/docker.sock --volume /tmp/cc:/tmp/cc codeclimate/codeclimate analyze -f json > codeclimate.json
+#  artifacts:
+#    paths: [codeclimate.json]
+#  only:
+#    - branches

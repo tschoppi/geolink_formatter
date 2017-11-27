@@ -28,7 +28,8 @@ def test_document():
                  files=[File('test.pdf', 'http://my.link.to/file', 'test')], enactment_date=date,
                  federal_level='testlevel', authority='Authority',
                  authority_url='http://my.link.to/authority', type='testtype', subtype='testsubtype',
-                 decree_date=date, instance='INST', number='123', abbreviation='abbr', abrogation_date=date)
+                 decree_date=date, instance='INST', number='123', abbreviation='abbr', abrogation_date=date,
+                 cycle='cycle')
     assert isinstance(d, Document)
     assert d.id == '1'
     assert d.title == 'Test'
@@ -46,6 +47,7 @@ def test_document():
     assert d.number == '123'
     assert d.abbreviation == 'abbr'
     assert d.abrogation_date == date
+    assert d.cycle == 'cycle'
 
 
 def test_document_empty():
@@ -67,6 +69,7 @@ def test_document_empty():
     assert d.number is None
     assert d.abbreviation is None
     assert d.abrogation_date is None
+    assert d.cycle is None
 
 
 def test_document_invalid_decree_date():
