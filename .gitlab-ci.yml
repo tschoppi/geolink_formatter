@@ -92,17 +92,19 @@ pages:
   - master
 
 # Analyze code quality
-#codeclimate:
-#  image: docker:latest
-#  variables:
-#    DOCKER_DRIVER: overlay
-#  services:
-#    - docker:dind
-#  script:
-#    - docker pull codeclimate/codeclimate
-#    - docker run --env CODECLIMATE_CODE="$PWD/geolink_formatter" --volume "$PWD/geolink_formatter":/code --volume /var/run/docker.sock:/var/run/docker.sock --volume /tmp/cc:/tmp/cc codeclimate/codeclimate init
-#    - docker run --env CODECLIMATE_CODE="$PWD/geolink_formatter" --volume "$PWD/geolink_formatter":/code --volume /var/run/docker.sock:/var/run/docker.sock --volume /tmp/cc:/tmp/cc codeclimate/codeclimate analyze -f json > codeclimate.json
-#  artifacts:
-#    paths: [codeclimate.json]
-#  only:
-#    - branches
+codequality:
+  image: docker:stable
+  variables:
+    DOCKER_DRIVER: overlay2
+  allow_failure: true
+  services:
+    - docker:stable-dind
+  script:
+    - export SP_VERSION=$(echo "$CI_SERVER_VERSION" | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/')
+    - docker run
+        --env SOURCE_CODE="$PWD"
+        --volume "$PWD":/code
+        --volume /var/run/docker.sock:/var/run/docker.sock
+        "registry.gitlab.com/gitlab-org/security-products/codequality:$SP_VERSION" /code
+  artifacts:
+    paths: [codeclimate.json]
