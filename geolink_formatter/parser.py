@@ -17,19 +17,22 @@ class SCHEMA(object):
     V1_1_0 = '1.1.0'
     """str: geoLink schema version 1.1.0"""
 
+    V1_1_1 = '1.1.1'
+    """str: geoLink schema version 1.1.1"""
+
 
 class XML(XMLParser):
 
     _date_format = '%Y-%m-%d'
     """str: Format of date values in XML."""
 
-    def __init__(self, host_url=None, version='1.1.0', dtd_validation=False):
+    def __init__(self, host_url=None, version='1.1.1', dtd_validation=False):
         """Create a new XML parser instance containing the geoLink XSD for validation.
 
         Args:
             host_url (str): URL of the OEREBlex host to resolve relative URLs. The complete URL until but
                 without the */api* part has to be set, starting with *http://* or *https://*.
-            version (str): The version of the geoLink schema to be used. Defaults to `1.1.0`.
+            version (str): The version of the geoLink schema to be used. Defaults to `1.1.1`.
             dtd_validation (bool): Enable/disable validation of document type definition (DTD).
                 Optional, defaults to False.
 
