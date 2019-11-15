@@ -182,6 +182,17 @@ def test_schema_version_1_1_1():
     assert documents[0].abrogation_date is None
 
 
+def test_schema_version_1_2_0():
+    with requests_mock.mock() as m:
+        with open('tests/resources/geolink_v1.2.0.xml', 'rb') as f:
+            m.get('http://oereblex.test.com/api/geolinks/1500.xml', content=f.read())
+        documents = XML(version=SCHEMA.V1_2_0).from_url('http://oereblex.test.com/api/geolinks/1500.xml')
+    assert len(documents) == 5
+    assert documents[-1].doctype == 'notice'
+    assert documents[-1].category == 'related'
+    assert len(documents[-1].files) == 1
+
+
 def test_schema_version_1_1_1_with_bezirk():
     fmt = '%Y-%m-%d'
     with requests_mock.mock() as m:
