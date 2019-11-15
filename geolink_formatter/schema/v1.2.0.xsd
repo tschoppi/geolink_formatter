@@ -49,6 +49,16 @@
                                 </xs:restriction>
                             </xs:simpleType>
                         </xs:attribute>
+                        <xs:attribute name="language">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:enumeration value="de"/>
+                                    <xs:enumeration value="fr"/>
+                                    <xs:enumeration value="it"/>
+                                    <xs:enumeration value="rm"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:attribute>
                         <xs:attribute name="authority" type="xs:string"/>
                         <xs:attribute name="authority_url" type="xs:string"/>
                         <xs:attribute name="cycle" type="xs:string"/>
