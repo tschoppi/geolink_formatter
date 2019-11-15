@@ -101,6 +101,13 @@ class XML(object):
 
         for document_el in root.iter('document'):
             doc_id = document_el.attrib.get('id')
+            doctype = document_el.attrib.get('doctype')
+
+            # Mangle doc_id for notices. While IDs are unique between decrees
+            # and edicts, this is not the case when adding notices to the mix.
+            if doctype == 'notice':
+                doc_id += doctype
+
             if doc_id and doc_id not in [doc.id for doc in documents]:
                 files = list()
                 for file_el in document_el.iter('file'):
