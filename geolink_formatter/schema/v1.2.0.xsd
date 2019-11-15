@@ -34,6 +34,7 @@
                                 <xs:restriction base="xs:string">
                                     <xs:enumeration value="edict"/>
                                     <xs:enumeration value="decree"/>
+                                    <xs:enumeration value="notice"/>
                                 </xs:restriction>
                             </xs:simpleType>
                         </xs:attribute>
