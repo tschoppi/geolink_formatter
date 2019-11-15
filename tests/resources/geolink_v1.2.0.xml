@@ -35,4 +35,7 @@
               title="700.1.pdf"></file>
 
     </document>
+    <document category="related" doctype="notice" id="4" title="Beispiel Hinweis Dokument">
+        <file category="main" href="/api/attachments/5101" title="example_notice.pdf"></file>
+    </document>
 </geolinks>
