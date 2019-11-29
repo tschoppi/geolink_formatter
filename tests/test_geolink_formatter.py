@@ -97,6 +97,7 @@ def test_html_url(mock_request):
                    u'</li>' \
                    u'</ul>'
 
+
 def test_html_invalid_source():
     with pytest.raises(TypeError):
         GeoLinkFormatter().html(1)
