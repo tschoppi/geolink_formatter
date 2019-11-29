@@ -142,7 +142,7 @@ def test_xml_from_url(mock_request):
     fmt = '%Y-%m-%d'
     with mock_request():
         documents = XML().from_url('http://oereblex.test.com/api/geolinks/1500.xml')
-        assert len(documents) == 4
+        assert len(documents) == 5
         assert len(documents[0].files) == 5
         assert documents[0].decree_date.strftime(fmt) == '2001-03-15'
 
@@ -207,7 +207,7 @@ def test_schema_version_1_1_1_with_bezirk():
 
 def test_default_version_with_locale():
     with requests_mock.mock() as m:
-        with open('tests/resources/geolink_v1.1.1.xml', 'rb') as f:
+        with open('tests/resources/geolink_v1.2.0.xml', 'rb') as f:
             m.get('http://oereblex.test.com/api/geolinks/1500.xml?locale=fr', content=f.read())
         documents = XML().from_url('http://oereblex.test.com/api/geolinks/1500.xml', {'locale': 'fr'})
     assert documents[0].number == '1A'

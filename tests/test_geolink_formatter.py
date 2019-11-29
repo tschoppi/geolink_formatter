@@ -87,8 +87,15 @@ def test_html_url(mock_request):
                    u'</li>' \
                    u'</ul>' \
                    u'</li>' \
+                   u'<li class="geolink-formatter-document">' \
+                   u'Beispiel Hinweis Dokument  ' \
+                   u'<ul class="geolink-formatter">' \
+                   u'<li class="geolink-formatter-file">' \
+                   u'<a href="/api/attachments/5101" target="_blank">example_notice.pdf</a>' \
+                   u'</li>' \
+                   u'</ul>' \
+                   u'</li>' \
                    u'</ul>'
-
 
 def test_html_invalid_source():
     with pytest.raises(TypeError):
