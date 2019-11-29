@@ -10,13 +10,13 @@ __version__ = '1.4.0'
 
 
 class GeoLinkFormatter(object):
-    def __init__(self, host_url=None, version='1.1.0', dtd_validation=False):
+    def __init__(self, host_url=None, version='1.2.0', dtd_validation=False):
         """Creates a new GeoLinkFormatter instance.
 
         Args:
             host_url (str): URL of the OEREBlex host to resolve relative URLs. The complete URL until but
                 without the */api* part has to be set, starting with *http://* or *https://*.
-            version (str): The version of the geoLink schema to be used. Defaults to `1.1.0`.
+            version (str): The version of the geoLink schema to be used. Defaults to `1.2.0`.
             dtd_validation (bool): Enable/disable validation of document type definition (DTD).
                 Optional, defaults to False.
 

@@ -29,13 +29,13 @@ class XML(object):
     _date_format = '%Y-%m-%d'
     """str: Format of date values in XML."""
 
-    def __init__(self, host_url=None, version='1.1.1', dtd_validation=False, xsd_validation=True):
+    def __init__(self, host_url=None, version='1.2.0', dtd_validation=False, xsd_validation=True):
         """Create a new XML parser instance containing the geoLink XSD for validation.
 
         Args:
             host_url (str): URL of the OEREBlex host to resolve relative URLs. The complete URL until but
                 without the */api* part has to be set, starting with *http://* or *https://*.
-            version (str): The version of the geoLink schema to be used. Defaults to `1.1.1`.
+            version (str): The version of the geoLink schema to be used. Defaults to `1.2.0`.
             dtd_validation (bool): Enable/disable validation of document type definition (DTD).
                 Optional, defaults to False.
             xsd_validation (bool): Enable/disable validation against XML schema (XSD).
