@@ -32,6 +32,10 @@ class HTML(object):
             str: The document formatted as HTML list item.
 
         """
+        if document.enactment_date:
+            enactment_date = u'({0})'.format(document.enactment_date.strftime('%d.%m.%Y'))
+        else:
+            enactment_date = u''
         if document.abrogation_date:
             files = u''
             strike_start = u'<strike>'
@@ -44,12 +48,12 @@ class HTML(object):
             abrogation_date = u''
         subtype = u' ({0})'.format(document.subtype) if document.subtype else u''
         return u'<li class="geolink-formatter-document">' \
-               u'{strike_start}{type}{title} ({enactment_date}){strike_end} {abrogation_date}{files}' \
+               u'{strike_start}{type}{title} {enactment_date}{strike_end} {abrogation_date}{files}' \
                u'</li>'.format(
                    type=u'{0}{1}: '.format(document.type or u'', subtype)
                    if document.type or document.subtype else u'',
                    title=document.title,
-                   enactment_date=document.enactment_date.strftime('%d.%m.%Y'),
+                   enactment_date=enactment_date,
                    files=files,
                    strike_start=strike_start,
                    strike_end=strike_end,
