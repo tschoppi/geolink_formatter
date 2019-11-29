@@ -54,7 +54,7 @@ def document_archived():
 @contextmanager
 def _mock_request():
     with requests_mock.mock() as m:
-        with open('tests/resources/geolink_v1.1.1.xml', 'rb') as f:
+        with open('tests/resources/geolink_v1.2.0.xml', 'rb') as f:
             m.get('http://oereblex.test.com/api/geolinks/1500.xml', content=f.read())
         yield m
 
