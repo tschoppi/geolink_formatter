@@ -27,8 +27,8 @@ def test_file_empty():
 def test_document():
     date = datetime.date.today()
     d = Document(id='1', title='Test', category='test', doctype='testdoc',
-                 files=[File('test.pdf', 'http://my.link.to/file', 'test')], enactment_date=date,
-                 federal_level='testlevel', authority='Authority',
+                 files=[File('TestCategory', 'http://my.link.to/file', 'Test Title', 'test.pdf')],
+                 enactment_date=date, federal_level='testlevel', authority='Authority',
                  authority_url='http://my.link.to/authority', type='testtype', subtype='testsubtype',
                  decree_date=date, instance='INST', number='123', abbreviation='abbr', abrogation_date=date,
                  cycle='cycle')
