@@ -1,6 +1,18 @@
 Changelog
 =========
 
+Unreleased
+----------
+
+Supported geoLink schema versions: v1.0.0, v1.1.0, v1.1.1, v1.2.0 (default)
+
+- Add support for geoLink schema version 1.2.0
+- New document attribute 'language'
+- New doctype 'notice'
+- Files now have filenames as well as titles, using the title for display where
+  possible
+
+
 1.4.0
 -----
 
