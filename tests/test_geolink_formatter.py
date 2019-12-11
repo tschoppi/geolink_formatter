@@ -47,13 +47,13 @@ def test_html_url(mock_request):
                    u'<a href="/api/attachments/4735" target="_blank">2918-E-1.pdf</a>' \
                    u'</li>' \
                    u'<li class="geolink-formatter-file">' \
-                   u'<a href="/api/attachments/4736" target="_blank">2918-P-1.pdf</a>' \
+                   u'<a href="/api/attachments/4736" target="_blank">Plan 1</a>' \
                    u'</li>' \
                    u'<li class="geolink-formatter-file">' \
-                   u'<a href="/api/attachments/4737" target="_blank">2918-P-2.pdf</a>' \
+                   u'<a href="/api/attachments/4737" target="_blank">Plan 2</a>' \
                    u'</li>' \
                    u'<li class="geolink-formatter-file">' \
-                   u'<a href="/api/attachments/4738" target="_blank">2918-P-3.pdf</a>' \
+                   u'<a href="/api/attachments/4738" target="_blank">Plan 3</a>' \
                    u'</li>' \
                    u'<li class="geolink-formatter-file">' \
                    u'<a href="/api/attachments/4739" target="_blank">2918-S-1.pdf</a>' \
