@@ -116,6 +116,7 @@ class XML(object):
                         href = u'{host}{href}'.format(host=self.host_url, href=href)
                     files.append(File(
                         title=file_el.attrib.get('title'),
+                        filename=file_el.attrib.get('filename'),
                         href=href,
                         category=file_el.attrib.get('category')
                     ))
