@@ -64,9 +64,9 @@ def test_xml_from_string(host_url):
                   type='Example Type' decree_date='1999-11-01'>
             <file category='main' href='/api/attachments/1' title='example1.pdf'></file>
             <file category='additional' href='/api/attachments/2'
-                  title='Example File' filename='example2.pdf'></file>
+                  description='Example File' title='example2.pdf'></file>
             <file category='additional' href='/api/attachments/3'
-                  title='Example 2' filename='example3.pdf'></file>
+                  description='Example 2' title='example3.pdf'></file>
         </document>
         <document authority='Another authority' authority_url='http://www.example.com' category='related'
                   doctype='edict' enactment_date='2016-01-01' federal_level='Bund' id='2'
