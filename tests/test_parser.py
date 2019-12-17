@@ -94,8 +94,8 @@ def test_xml_from_string(host_url):
     assert documents[0].decree_date.month == 11
     assert documents[0].decree_date.day == 1
     assert len(documents[0].files) == 3
-    assert documents[0].files[1].title == 'Example File'
-    assert documents[0].files[1].filename == 'example2.pdf'
+    assert documents[0].files[1].description == 'Example File'
+    assert documents[0].files[1].title == 'example2.pdf'
     if host_url:
         assert documents[0].files[1].href == 'http://oereblex.test.com/api/attachments/2'
     else:

@@ -172,21 +172,21 @@ class Document(object):
 
 
 class File(object):
-    def __init__(self, category=None, href=None, title=None, filename=None):
+    def __init__(self, category=None, href=None, title=None, description=None):
         """Creates a new file instance.
 
         Args:
             category (str): The file's category.
             href (str): The URL to access the file.
             title (str): The file's title.
-            filename (str): The file's filename.
+            description (str): The file's description.
 
         """
 
         self._title = title
         self._href = href
         self._category = category
-        self._filename = filename
+        self._description = description
 
     @property
     def title(self):
@@ -204,6 +204,6 @@ class File(object):
         return self._category
 
     @property
-    def filename(self):
-        """str: The file's filename."""
-        return self._filename
+    def description(self):
+        """str: The file's description."""
+        return self._description

@@ -114,13 +114,9 @@ class XML(object):
                     href = file_el.attrib.get('href')
                     if self.host_url and not href.startswith(u'http://') and not href.startswith(u'https://'):
                         href = u'{host}{href}'.format(host=self.host_url, href=href)
-
-                    # NOTE: The XML attribute 'title' contains the filename in
-                    # truth, and the attribute 'description' is the true title
-                    # of the file (may be empty).
                     files.append(File(
-                        title=file_el.attrib.get('description'),
-                        filename=file_el.attrib.get('title'),
+                        title=file_el.attrib.get('title'),
+                        description=file_el.attrib.get('description'),
                         href=href,
                         category=file_el.attrib.get('category')
                     ))
