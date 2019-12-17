@@ -81,8 +81,8 @@ class HTML(object):
     def __format_file__(cls, file):
         """Formats a :obj:`geolink_formatter.entity.File` instance as HTML list item.
 
-        The name displayed is the title, falling back on the filename if no
-        title is present.
+        The name displayed is the description, falling back on the title
+        (containing the filename) if no description is present.
 
         Args:
             file (geolink_formatter.entity.File): The file to be formatted.
@@ -91,9 +91,9 @@ class HTML(object):
             str: The file formatted as HTML list item.
 
         """
-        title = file.title
+        title = file.description
         if not title:
-            title = file.filename
+            title = file.title
 
         return u'<li class="geolink-formatter-file"><a href="{href}" target="_blank">{title}</a></li>'.format(
             title=title,

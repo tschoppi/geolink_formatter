@@ -16,7 +16,7 @@ def documents():
             title='Document with file',
             category='main',
             doctype='decree',
-            files=[File(title='Test file', filename='test.pdf',
+            files=[File(description='Test file', title='test.pdf',
                         href='http://www.example.com/test.pdf', category='main')],
             enactment_date=datetime.date(2017, 1, 15)
         )
@@ -45,7 +45,7 @@ def document_archived():
             title='Archived document',
             category='main',
             doctype='decree',
-            files=[File(title='Test file', filename='test.pdf',
+            files=[File(description='Test file', title='test.pdf',
                         href='http://www.example.com/test.pdf', category='main')],
             enactment_date=datetime.date(2017, 1, 15),
             abrogation_date=datetime.date(2019, 1, 1)

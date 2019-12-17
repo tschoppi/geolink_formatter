@@ -7,12 +7,12 @@ from geolink_formatter.entity import File, Document
 
 
 def test_file():
-    f = File(title='File title', href='http://my.link.to/file', category='test', filename='test.pdf')
+    f = File(description='File title', href='http://my.link.to/file', category='test', title='test.pdf')
     assert isinstance(f, File)
-    assert f.title == 'File title'
+    assert f.description == 'File title'
     assert f.href == 'http://my.link.to/file'
     assert f.category == 'test'
-    assert f.filename == 'test.pdf'
+    assert f.title == 'test.pdf'
 
 
 def test_file_empty():
@@ -21,7 +21,7 @@ def test_file_empty():
     assert f.title is None
     assert f.href is None
     assert f.category is None
-    assert f.filename is None
+    assert f.description is None
 
 
 def test_document():
